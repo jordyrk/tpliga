@@ -1,0 +1,48 @@
+var tpl = {
+    Utils : function () {
+        this.formatterTall = function (str) {
+            if (str != '' && str != 0 && str != '0') {
+                var tall = this.removeSpaces(str);
+                var rgx = /(\d+)(\d{3})/;
+                while (rgx.test(tall)) {
+                    tall = tall.replace(rgx, '$1' + ' ' + '$2');
+                }
+            } else {
+                tall = 0;
+            }
+            return tall;
+        };
+
+         this.removeSpaces = function(str) {
+            var s = "" + str;
+            var newS = "";
+            for (var i = 0; i < s.length; i++) {
+                var c = s.charCodeAt(i);
+                if (c != 32 && c != 160) {
+                    newS += s.charAt(i);
+                }
+            }
+            if (newS == "") {
+                newS = "0";
+            }
+            return newS;
+        };
+        this.formatterDato = function(dato) {
+            var d = dato.getDate();
+            if (d < 10) {
+                d = "0" + d;
+            }
+            var m = dato.getMonth() + 1;
+            if (m < 10) {
+                m = "0" + m;
+            }
+            var y = dato.getFullYear();
+            return d + "." + m + "." + y;
+        };
+
+        this.createClassNameFromTeamShortName = function(shortName){
+            return shortName.toLowerCase().split(' ').join('');
+        };
+    }
+};
+var utils = new tpl.Utils();

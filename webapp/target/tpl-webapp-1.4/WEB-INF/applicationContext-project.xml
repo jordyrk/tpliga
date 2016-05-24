@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <import resource="applicationContext.xml"/>
+    <bean id="tplTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="tplDataSource"/>
+    </bean>
+
+    <bean id="tplDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>${database.driver}</value>
+        </property>
+        <property name="url">
+            <value>${database.url}</value>
+        </property>
+        <property name="username">
+            <value>${database.username}</value>
+        </property>
+        <property name="password">
+            <value>${database.password}</value>
+        </property>
+        <property name="maxActive">
+            <value>40</value>
+        </property>
+        <property name="minIdle">
+            <value>4</value>
+        </property>
+        <property name="maxWait">
+            <value>30000</value>
+        </property>
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>120000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value>300000</value>
+        </property>
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
+    </bean>
+    <bean id="tpl_league_DataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>${database.driver}</value>
+        </property>
+        <property name="url">
+            <value>${tpldatabase.url}</value>
+        </property>
+        <property name="username">
+            <value>${database.username}</value>
+        </property>
+        <property name="password">
+            <value>${database.password}</value>
+        </property>
+        <property name="maxActive">
+            <value>40</value>
+        </property>
+        <property name="minIdle">
+            <value>4</value>
+        </property>
+        <property name="maxWait">
+            <value>30000</value>
+        </property>
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>120000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value>300000</value>
+        </property>
+        <property name="validationQuery">
+            <value>select 1</value>
+        </property>
+    </bean>
+
+    <!-- Beans provided by Aksess -->
+    <bean id="newsArchiveController" class="no.kantega.publishing.controls.standard.NewsArchiveController">
+        <property name="startYear" value="2009"/>
+        <property name="defaultMax" value="20"/>
+    </bean>
+
+    <bean id="subscriptionController" class="no.kantega.publishing.controls.standard.SubscriptionController"/>
+
+    <bean id="alphabeticalListController" class="no.kantega.publishing.controls.standard.AlphabeticalListController">
+        <property name="associationCategory" value="Main column"/>
+    </bean>
+
+    <bean id="aksessSearchController" class="no.kantega.publishing.search.control.ContentSearchController">
+        <property name="searchService" ref="searchService"/>
+    </bean>
+
+    <bean id="defaultContentCreator" class="org.tpl.DefaultContentCreatorStandard" />
+    <!-- Beans provided by Aksess -->
+
+    <!--Services -->
+    <bean id="leagueService" class="org.tpl.business.service.DefaultLeagueService"/>
+
+    <bean id="playerService" class="org.tpl.business.service.DefaultPlayerService"/>
+
+    <bean id="fantasyService" class="org.tpl.business.service.fantasy.DefaultFantasyService"/>
+
+    <bean id="fantasyCompetitionService" class="org.tpl.business.service.fantasy.DefaultFantasyCompetitionService"/>
+
+    <bean id="ruleService" class="org.tpl.business.service.fantasy.DefaultRuleService"/>
+
+    <bean id="fantasyLeagueService" class="org.tpl.business.service.fantasy.DefaultFantasyLeagueService"/>
+
+    <bean id="fantasyCupService" class="org.tpl.business.service.fantasy.DefaultFantasyCupService"/>
+
+    <bean id="fantasyCupGroupService" class="org.tpl.business.service.fantasy.DefaultFantasyCupGroupService"/>
+
+    <bean id="fantasyMatchService" class="org.tpl.business.service.fantasy.DefaultFantasyMatchService"/>
+
+    <bean id="importService" class="org.tpl.business.service.DefaultImportService"/>
+
+    <bean id="chatService" class="org.tpl.business.service.chat.DefaultChatService"/>
+
+    <bean id="hallOfFameService" class="org.tpl.business.service.fantasy.DefaultHallOfFameService"/>
+
+    <bean id="whoreService" class="org.tpl.business.service.fantasy.DefaultWhoreService"/>
+
+    <bean id="userService" class="org.tpl.business.service.DefaultUserService">
+        <property name="profileUpdateManager" ref="dbuserProfileUpdateManager"/>
+        <property name="profileManager" ref="dbuserProfileManager"/>
+        <property name="passwordManager" ref="dbuserPasswordManager"/>
+    </bean>
+
+    <bean id="multimediaService" class="org.tpl.business.service.DefaultMultimediaService">
+        <constructor-arg ref="aksessImageWidthAndHeightExtractor" />
+    </bean>
+
+    <bean id="sendMailRegistrationService" class="org.tpl.business.service.DefaultSendMailRegistrationService"/>
+    <!--Services -->
+    <!-- DAO-->
+    <bean id="teamDao" class="org.tpl.integration.dao.JDBCTeamDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="matchDao" class="org.tpl.integration.dao.JDBCMatchDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="leagueDao" class="org.tpl.integration.dao.JDBCLeagueDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="seasonDao" class="org.tpl.integration.dao.JDBCSeasonDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="playerDao" class="org.tpl.integration.dao.JDBCPlayerDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="playerStatsDao" class="org.tpl.integration.dao.JDBCPlayerStatsDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasySeasonDao" class="org.tpl.integration.dao.fantasy.JDBCFantasySeasonDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyManagerDao" class="org.tpl.integration.dao.fantasy.JDBCFantasyManagerDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyCompetitionDao" class="org.tpl.integration.dao.fantasy.JDBCFantasyCompetitionDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyRoundDao" class="org.tpl.integration.dao.fantasy.JDBCFantasyRoundDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyTeamDao" class="org.tpl.integration.dao.fantasy.JDBCFantasyTeamDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyRuleDao" class="org.tpl.integration.dao.fantasy.JDBCFantasyRuleDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyCompetitionStandingDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyCompetitionStandingDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+
+    <bean id="fantasyLeagueDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyLeagueDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyCupDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyCupDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyCupGroupDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyCupGroupDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyCupGroupStandingDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyCupGroupStandingDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyMatchDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyMatchDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="fantasyLeagueStandingDao" class="org.tpl.integration.dao.fantasy.JdbcFantasyLeagueStandingDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+    <bean id="chatMessageDao" class="org.tpl.integration.dao.chat.JdbcChatMessageDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+
+    <bean id="hallOfFameDao" class="org.tpl.integration.dao.fantasy.JdbcHallOfFameDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+
+    <bean id="whoreDao" class="org.tpl.integration.dao.fantasy.JdbcWhoreDao">
+        <property name="dataSource" ref="tpl_league_DataSource"/>
+    </bean>
+
+
+    <!-- Validators-->
+    <bean id="seasonValidator" class="org.tpl.business.model.validator.SeasonValidator"/>
+    <bean id="leagueValidator" class="org.tpl.business.model.validator.LeagueValidator"/>
+    <bean id="teamValidator" class="org.tpl.business.model.validator.TeamValidator"/>
+    <bean id="playerValidator" class="org.tpl.business.model.validator.PlayerValidator"/>
+    <bean id="matchValidator" class="org.tpl.business.model.validator.MatchValidator"/>
+    <bean id="playerStatsValidator" class="org.tpl.business.model.validator.PlayerStatsValidator"/>
+    <bean id="managerRegistrationValidator" class="org.tpl.business.model.validator.ManagerRegistrationValidator"/>
+
+    <bean id="fantasyManagerValidator" class="org.tpl.business.model.validator.FantasyManagerValidator"/>
+    <bean id="fantasyTeamValidator" class="org.tpl.business.model.validator.FantasyTeamValidator"/>
+    <bean id="fantasySeasonValidator" class="org.tpl.business.model.validator.FantasySeasonValidator"/>
+    <bean id="fantasyRoundValidator" class="org.tpl.business.model.validator.FantasyRoundValidator"/>
+    <bean id="fantasyLeagueValidator" class="org.tpl.business.model.validator.FantasyLeagueValidator"/>
+    <bean id="fantasyCupValidator" class="org.tpl.business.model.validator.FantasyCupValidator"/>
+    <bean id="fantasyCupGroupValidator" class="org.tpl.business.model.validator.FantasyCupGroupValidator"/>
+    <bean id="playerRuleValidator" class="org.tpl.business.model.validator.PlayerRuleValidator"/>
+    <bean id="teamRuleValidator" class="org.tpl.business.model.validator.TeamRuleValidator"/>
+
+    <!-- DAO -->
+
+    <!-- Parsers-->
+
+    <bean id="playerStatsConstructor" class="org.tpl.integration.parser.FantasyPremierLeaguePlayerStatsConstructor"/>
+
+
+    <bean id="matchParserHtml" class="org.tpl.integration.parser.MatchParserHtmlImpl">
+        <property name="leagueService" ref="leagueService"/>
+    </bean>
+
+
+    <bean id="fantasyPremierLeagueMatchHtmlParser" class="org.tpl.integration.parser.FantasyPremierLeagueMatchHtmlParser">
+        <property name="baseUrl">
+            <value>http://fantasy.premierleague.com/fixtures/%s/</value>
+        </property>
+    </bean>
+
+    <bean id="playerStatsParser" class="org.tpl.integration.parser.FantasyPremierLeaguePlayerStatsParser">
+        <property name="baseUrl" value="http://fantasy.premierleague.com/fixture/%s/"/>
+    </bean>
+
+    <!-- Parsers-->
+</beans>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/tpl/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="order" value="3" />
+    </bean>
+    <bean id="isLoggedInInterceptor" class="org.tpl.presentation.security.IsLoggedInInterceptor"/>
+    
+    <bean id="tplAdminInterceptor" class="org.tpl.presentation.security.UserRoleInterceptor">
+        <property name="roles" value="admin,tpladmin"/>
+    </bean>
+
+    <bean class="org.tpl.presentation.spring.SelectedAnnotationHandlerMapping">
+        <property name="order" value="0" />
+        <property name="urls">
+            <list>
+                <value>/admin*</value>
+            </list>
+        </property>
+        <property name="interceptors">
+            <list>
+                <ref bean="tplAdminInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.tpl.presentation.spring.SelectedAnnotationHandlerMapping">
+        <property name="order" value="2" />
+        <property name="urls">
+            <list>
+                <value>/mypage*</value>
+                <value>/competition*</value>
+                <value>/rules*</value>
+                <value>/player*</value>
+                <value>/fantasy*</value>
+
+            </list>
+        </property>
+        <property name="interceptors">
+            <list>
+                <ref bean="isLoggedInInterceptor"/>
+            </list>
+        </property>
+    </bean>
+
+
+
+    <!-- Util-->
+    <bean id="leagueControllerUtil" class="org.tpl.presentation.control.admin.util.LeagueControllerUtil"/>
+    <bean id="seasonControllerUtil" class="org.tpl.presentation.control.admin.util.SeasonControllerUtil"/>
+    <bean id="teamControllerUtil" class="org.tpl.presentation.control.admin.util.TeamControllerUtil"/>
+    <bean id="playerControllerUtil" class="org.tpl.presentation.control.admin.util.PlayerControllerUtil"/>
+    <bean id="matchControllerUtil" class="org.tpl.presentation.control.admin.util.MatchControllerUtil"/>
+    <bean id="fantasyCupControllerUtil" class="org.tpl.presentation.control.admin.util.FantasyCupControllerUtil"/>
+    <bean id="ruleControllerUtil" class="org.tpl.presentation.control.admin.util.RuleControllerUtil"/>
+    <bean id="fantasyUtil" class="org.tpl.presentation.common.FantasyUtil"/>
+    <bean id="fantasyLeagueControllerUtil" class="org.tpl.presentation.control.admin.util.FantasyLeagueControllerUtil"/>
+   
+    <!-- Controllers-->
+    <bean id="managerRegistrationController" class="org.tpl.presentation.control.ManagerRegistrationController"/>
+    <bean id="myPageController" class="org.tpl.presentation.control.MypageController"/>
+    <bean id="competitionController" class="org.tpl.presentation.control.fantasy.FantasyCompetitionController"/>
+    <bean id="fantasyManagerFormController" class="org.tpl.presentation.control.fantasy.FantasyManagerFormController"/>
+    <bean id="fantasyTeamFormController" class="org.tpl.presentation.control.fantasy.FantasyTeamFormController"/>
+    <bean id="playerStatsController" class="org.tpl.presentation.control.league.PlayerStatsController"/>
+    <bean id="playerController" class="org.tpl.presentation.control.league.PlayerController"/>
+    <bean id="matchController" class="org.tpl.presentation.control.league.MatchController"/>
+    <bean id="ruleDisplayController" class="org.tpl.presentation.control.RuleDisplayController"/>
+    <bean id="chartController" class="org.tpl.presentation.control.fantasy.ChartController"/>
+    <bean id="teamRoundController"  class="org.tpl.presentation.control.fantasy.FantasyTeamRoundController"/>
+    <bean id="teamController" class="org.tpl.presentation.control.league.TeamController"/>
+    <bean id="teamImageController" class="org.tpl.presentation.control.fantasy.FantasyTeamImageController"/>
+    <bean id="fantasyLeagueController" class="org.tpl.presentation.control.fantasy.FantasyLeagueController"/>
+    <bean id="fantasyCupController" class="org.tpl.presentation.control.fantasy.FantasyCupController"/>
+    <bean id="fantasyMatchController" class="org.tpl.presentation.control.fantasy.FantasyMatchController"/>
+    <bean id="fantasyRoundController" class="org.tpl.presentation.control.fantasy.FantasyRoundController"/>
+    <bean id="openDataController" class="org.tpl.presentation.control.fantasy.OpenDataController"/>
+    <!-- Admin controllers-->
+    <bean id="adminController" class="org.tpl.presentation.control.admin.AdminController"/>
+    <bean id="seasonController" class="org.tpl.presentation.control.admin.SeasonAdminController"/>
+    <bean id="seasonFormController" class="org.tpl.presentation.control.admin.SeasonFormController"/>
+    <bean id="leagueController" class="org.tpl.presentation.control.admin.LeagueAdminController"/>
+    <bean id="leagueFormController" class="org.tpl.presentation.control.admin.LeagueFormController"/>
+    <bean id="teamAdminController" class="org.tpl.presentation.control.admin.TeamAdminController"/>
+    <bean id="teamFormController" class="org.tpl.presentation.control.admin.TeamFormController"/>
+    <bean id="playerAdminController" class="org.tpl.presentation.control.admin.PlayerAdminController"/>
+    <bean id="playerFormController" class="org.tpl.presentation.control.admin.PlayerFormController"/>
+    <bean id="matchAdminController" class="org.tpl.presentation.control.admin.MatchAdminController"/>
+    <bean id="matchFormController" class="org.tpl.presentation.control.admin.MatchFormController"/>
+    <bean id="playerStatsFormController" class="org.tpl.presentation.control.admin.PlayerStatsFormController"/>
+    <bean id="fantasySeasonController" class="org.tpl.presentation.control.admin.FantasySeasonAdminController"/>
+    <bean id="fantasySeasonFormController" class="org.tpl.presentation.control.admin.FantasySeasonFormController"/>
+    <bean id="fantasyCompetitionController" class="org.tpl.presentation.control.admin.FantasyCompetitionAdminController"/>
+    <bean id="fantasyCompetitionFormController" class="org.tpl.presentation.control.admin.FantasyCompetitionFormController"/>
+    <bean id="fantasyLeagueFormController" class="org.tpl.presentation.control.admin.FantasyLeagueFormController"/>
+    <bean id="fantasyLeagueAdminController" class="org.tpl.presentation.control.admin.FantasyLeagueAdminController"/>
+    <bean id="fantasyRuleController" class="org.tpl.presentation.control.admin.RuleAdminController"/>
+    <bean id="playerRuleFormController" class="org.tpl.presentation.control.admin.PlayerRuleAdminFormController"/>
+    <bean id="teamRuleFormController" class="org.tpl.presentation.control.admin.TeamRuleFormController"/>
+    <bean id ="fantasyRoundFormController" class="org.tpl.presentation.control.admin.FantasyRoundFormController"/>
+    <bean id="chatMessageController" class="org.tpl.presentation.control.ChatMessageController"/>
+    <bean id="fantasyTeamController" class="org.tpl.presentation.control.fantasy.FantasyTeamController"/>
+    <bean id="fantasyCupAdminController" class="org.tpl.presentation.control.admin.FantasyCupAdminController"/>
+    <bean id="fantasyCupGroupAdminController" class="org.tpl.presentation.control.admin.FantasyCupGroupAdminController"/>
+    <bean id="fantasyManagerAdminController" class="org.tpl.presentation.control.admin.FantasyManagerAdminController"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="site"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+</beans>

@@ -1,0 +1,93 @@
+//<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+var tpl = {
+
+    FantasyCompetition : function(){
+        var maxNumberOfRounds;
+
+        this.init = function(){
+            debug.debug("tpl.FantasyCompetition.init.function");
+            $("#FantasyCompetitionTabs").tabs();
+            $("#StandardTable").tablesorter();
+            var fantasyTeamId = $("#FantasyTeamId").val();
+            $.get("${pageContext.request.contextPath}/tpl/chart/roundchart?teamId=" + fantasyTeamId, function(data){
+                $("#TeamChart").html(data);
+            });
+            applyFantasyOpenCompetitionListeners();
+            maxNumberOfRounds = $("#FormMax").val();
+        };
+
+        var applyFantasyOpenCompetitionListeners = function() {
+            $("#RoundUp").click(function(event){
+                event.preventDefault();
+                increaseRound();
+            });
+
+            $("#RoundDown").click(function(event){
+                event.preventDefault();
+                decreaseRound();
+            });
+            $("#SeasonSelect").change(function(event){
+                $("#SeasonForm").submit();
+            });
+        };
+
+        this.updateForm = function( numberOfRounds){
+            showOrHideRoundSelector(numberOfRounds);
+            standard.setWait("#FormTableWrapper","wait");
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/competition/form?numberOfRounds=" +numberOfRounds, function(data){
+                $("#FormTableWrapper").html(data);
+                $("#FormTable").tablesorter();
+
+            });
+            var text = "Form siste " +numberOfRounds + " runder";
+            if(numberOfRounds == 1){
+                text = "Siste runde";
+            }
+            $("#FormRoundNumber").html(text);
+        }
+        var updateRoundSelectorLabel = function(roundnumber){
+            $("#FormRoundNumber").html(roundnumber)
+        }
+        var showOrHideRoundSelector = function(roundNumber){
+            $("#RoundDown").removeClass("hidden");
+            $("#RoundUp").removeClass("hidden");
+            if(roundNumber == 1){
+                $("#RoundDown").addClass("hidden");
+            }
+            if(roundNumber == maxNumberOfRounds){
+
+                $("#RoundUp").addClass("hidden");
+            }
+        }
+
+        var decreaseRound = function(){
+            var roundNumber = $("#FormSelector [selected=selected]").val();
+
+            roundNumber--;
+            if(roundNumber < 1){
+                roundNumber = 1;
+            }
+
+            $("#FormSelector [selected=selected]").removeAttr("selected");
+            $("#FormSelector [value="+roundNumber+"]").attr("selected","selected");
+            fantasyCompetition.updateForm(roundNumber);
+        }
+
+        var increaseRound = function(){
+            var roundNumber = $("#FormSelector [selected=selected]").val();
+            roundNumber++;
+            if(roundNumber > maxNumberOfRounds){
+
+                roundNumber == maxNumberOfRounds;
+            }
+            $("#FormSelector [selected=selected]").removeAttr("selected");
+            $("#FormSelector [value="+roundNumber+"]").attr("selected","selected");
+            fantasyCompetition.updateForm(roundNumber);
+        }
+    }
+
+};
+var fantasyCompetition = new tpl.FantasyCompetition();
+
+
+

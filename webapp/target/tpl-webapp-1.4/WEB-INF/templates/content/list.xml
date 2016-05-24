@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<template xmlns="http://www.kantega.no" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kantega.no http://www.kantega.no/aksess/aksess-template.xsd">
+    <attributes>
+        <attribute name="title" title="Tittel" type="text" mandatory="true" mapto="title"/>
+        <attribute name="lead paragraph" title="Ingress" type="text" mapto="description" maxlength="300"/>
+        <attribute name="display options" title="Visningsvalg" type="list">
+            <options>
+                <option value="leadParagraph_image">Vis overskrift, ingress og bilde</option>
+                <option value="leadParagraph">Vis overskrift og ingress</option>
+                <option value="none">Vis bare overskrift</option>
+            </options>
+            <helptext><![CDATA[Dersom brukerdefinert sortering er valgt kan undersider sorteres ved &aring; g&aring; inn p&aring; arkfanen &quot;Egenskaper&quot;]]></helptext>
+        </attribute>
+
+        <attribute name="order by" title="Sortering" type="list">
+            <options>
+                <option value="publishdate">Publisert dato - Nyeste f�rst</option>
+                <option value="title">Alfabetisk</option>
+                <option value="priority">Brukerdefinert</option>
+            </options>
+            <helptext><![CDATA[Dersom brukerdefinert sortering er valgt kan undersider sorteres ved &aring; g&aring; inn p&aring; arkfanen &quot;Egenskaper&quot;]]></helptext>
+        </attribute>
+
+    </attributes>
+</template>

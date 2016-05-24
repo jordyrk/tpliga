@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<template xmlns="http://www.kantega.no" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kantega.no http://www.kantega.no/aksess/aksess-template.xsd">
+    <attributes>
+        <attribute name="title" title="Tittel" type="text" mandatory="true" mapto="title"/>
+        <attribute name="lead paragraph" title="Ingress" type="text" mapto="description" maxlength="300"/>
+        <attribute name="question" title="Sp�rsm�l" type="text" maxlength="200" mandatory="true"/>
+        <attribute name="linktext" title="Lenketekst" type="text" maxlength="100" default="Vis resultater">
+            <helptext>
+                <![CDATA[Hvis du skriver noe i dette feltet vil det dukke opp en link sammen med alternativene slik at det blir mulig &aring; se resultatet
+                av avstemmingen uten &aring; ha stemt. Hvis dette feltet er blankt m&aring; man stemme for &aring; kunne se resultatet.]]>
+            </helptext>
+        </attribute>
+        <attribute name="alt1" title="Alternativ 1" type="text" maxlength="100" mandatory="true"/>
+        <attribute name="alt2" title="Alternativ 2" type="text" maxlength="100" mandatory="true">
+            <helptext><![CDATA[Et sp&oslash;rsm&aring;l m&aring; ha minimum to alternativer.]]></helptext>
+        </attribute>
+        <attribute name="alt3" title="Alternativ 3" type="text" maxlength="100"/>
+        <attribute name="alt4" title="Alternativ 4" type="text" maxlength="100"/>
+        <attribute name="alt5" title="Alternativ 5" type="text" maxlength="100"/>
+        <attribute name="alt6" title="Alternativ 6" type="text" maxlength="100"/>
+        <attribute name="alt7" title="Alternativ 7" type="text" maxlength="100"/>
+        <attribute name="alt8" title="Alternativ 8" type="text" maxlength="100"/>
+        <attribute name="alt9" title="Alternativ 9" type="text" maxlength="100"/>
+        <attribute name="alt10" title="Alternativ 10" type="text" maxlength="100"/>
+    </attributes>
+</template>

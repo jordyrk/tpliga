@@ -1,0 +1,151 @@
+//<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+var tpl = {
+
+    JsonJS : function(){
+
+
+        this.init = function(){
+            debug.debug("tpl.JsonJS.init.function");
+        };
+
+        this.getPlayerById = function(playerId){
+            var url = "${pageContext.request.contextPath}/tpl/admin/player/getplayer";
+            url += "?playerId=" + playerId;
+            getJson(url);
+        }
+
+        this.getPlayerByTeamId = function(teamId){
+            var url = "${pageContext.request.contextPath}/tpl/open/getplayersForTeam";
+            url += "?teamId=" + teamId;
+            return getJson(url);
+
+        }
+        this.getPlayerByTeamIdFilteredUnknown = function(teamId){
+            var url = "${pageContext.request.contextPath}/tpl/open/getplayersForTeamFilterUnkown";
+            url += "?teamId=" + teamId;
+            return getJson(url);
+
+        }
+
+        this.getAllPlayers = function(){
+            var url = "${pageContext.request.contextPath}/tpl/fantasy/playerlist";
+            return getJson(url);
+        }
+
+        this.getMostUsedPlayers = function(){
+            var url = "${pageContext.request.contextPath}/tpl/player/mostusedplayers";
+            return getJson(url);
+        }
+
+        this.getMostUsedPlayersInRound = function(){
+            var url = "${pageContext.request.contextPath}/tpl/player/mostusedplayersinround";
+            return getJson(url);
+        }
+
+        this.getMostUsedPlayersForTeam = function(){
+            var url = "${pageContext.request.contextPath}/tpl/player/mostusedplayersforteam";
+            return getJson(url);
+        }
+
+        this.getMostUsedPlayersAsTeamForTeam = function(){
+            var url = "${pageContext.request.contextPath}/tpl/player/mostusedplayersasteamforteam";
+            return getJson(url);
+        }
+
+        this.getSumPlayerStats = function(playerId, seasonId){
+            var url = "${pageContext.request.contextPath}/tpl/playerstats/sumplayerstats";
+            url += "?playerId=" + playerId;
+            url += "&seasonId=" + seasonId;
+            return getJson(url);
+        }
+        this.getSumPlayerStatsInCurrentSeason = function(playerId){
+            var url = "${pageContext.request.contextPath}/tpl/open/sumplayerstatsincurrentseason";
+            url += "?playerId=" + playerId;
+            return getJson(url);
+        }
+
+        this.getTeams = function(){
+            var url = "${pageContext.request.contextPath}/tpl/json/team";
+            return getJson(url);
+        }
+
+        this.getPlayersForPosition = function(position){
+            var url = "${pageContext.request.contextPath}/tpl/player/getplayersForPosition";
+            var firstParam = true;
+            if(position != null){
+                url += ("?playerposition=" + position);
+            }
+            return getJson(url);
+        }
+
+        this.getPlayersForFantasyTeam = function(fantasyRoundId){
+            var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/getfantasyteamround";
+            url += "?fantasyRoundId=" + fantasyRoundId;
+            return getJson(url);
+        }
+
+        this.addPlayerToTeam = function(playerPosition,playerId){
+            var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/addPlayerToTeam";
+            url += "?playerPosition=" + playerPosition;
+            url += "&playerId=" + playerId;
+            return getJson(url);
+        }
+
+        this.removePlayerFromTeam = function(formationPosition){
+            var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/removePlayerFromTeam";
+            url += "?formationPosition=" + formationPosition;
+            return getJson(url);
+        }
+
+        this.getFantasyRoundsInCurrentSeason = function(){
+            var url = "${pageContext.request.contextPath}/tpl/fantasyround/getfantasyroundsincurrentseason";
+            return getJson(url);
+        }
+
+        this.getNumberOfOfficalTeams = function(){
+            var url = "${pageContext.request.contextPath}/tpl/antallblottalag";
+            return getJson(url);
+        }
+
+        this.officialTeam = function(official){
+              var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/changeofficial?checked="
+                if(official){
+                    url +="true";
+                }else{
+                    url +="false";
+                }
+            return getJson(url);
+        }
+
+        this.officialTeamWhenRoundIsClosed = function(officialwhenroundisclosed){
+            var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/changeofficialwhenroundisclosed?checked="
+            if(officialwhenroundisclosed){
+                url +="true";
+            }else{
+                url +="false";
+            }
+            return getJson(url);
+        }
+
+        var getJson = function(url){
+            var jsonData;
+            $.ajax({
+                url: url,
+                dataType:"json",
+                async: false,
+                success: function(data){
+                    jsonData =  data;
+                }
+            });
+            return jsonData;
+
+        }
+    }
+
+};
+var jsonJS = new tpl.JsonJS();
+
+$(document).ready(function(){
+    debug.debug("tpl.JsonJS.init");
+    jsonJS.init();
+});

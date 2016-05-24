@@ -1,0 +1,785 @@
+//<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+var tpl = {
+
+    Fantasy : function(){
+        var playerPositionToBuy = "";
+        var playerJsonArray;
+        var minPrice;
+        var maxPrice;
+        var searchText = "";
+        var fantasyRoundId;
+        var fourPlayersOffset = 74;
+        var threePlayersOffset = 135;
+        var twoPlayersOffset = 190;
+        var onePlayersOffset = 240;
+        var closeTimeInMS
+        var timerTimeOut;
+        this.init = function(){
+            debug.debug("tpl.Fantasy.init.function");
+            fantasyRoundId = $("#FantasyRoundId").val();
+            closeTimeInMS = $("#CloseTime").val();
+            applyFantasyOpenListeners();
+            minPrice = $("#PriceSlider").slider( "values", 0 );
+            maxPrice = $("#PriceSlider").slider( "values", 1 );
+            fantasy.updateTimeToRoundCloses();
+            timerTimeOut = setInterval("fantasy.updateTimeToRoundCloses()",1000*60);
+
+            updateFantasTeam();
+            updateMinMaxPrice();
+            updateTeamView();
+            updateStatsTable();
+            showStatsArrows();
+
+        };
+
+        var playerContainsText = function(playerJson){
+            if(searchText == null || searchText.length == 0) {
+                return true;
+            }
+            searchText = searchText.toLowerCase();
+            var firstName = playerJson.firstName.toLowerCase();
+            if(firstName.indexOf(searchText)!=-1 ){
+                return true;
+            }
+            var lastName = playerJson.lastName.toLowerCase();
+            if(lastName.indexOf(searchText)!=-1){
+                return true;
+            }
+            var teamName = playerJson.team.toLowerCase();
+            if(teamName.indexOf(searchText)!=-1){
+                return true;
+            }
+            return false;
+        }
+
+        var filterPlayerJson = function(){
+            var filteredJsonPlayers = new Array();
+            var index = 0;
+            for(var i = 0; i < playerJsonArray.length; i++){
+                var playerJson = playerJsonArray[i];
+                var price = playerJson.price;
+                if(price >= minPrice && price <= maxPrice && playerContainsText(playerJson)){
+                    filteredJsonPlayers[index] = playerJson;
+                    index++;
+                }
+            }
+            populatePlayerSelector(filteredJsonPlayers);
+        }
+
+        var movePlayerInfoLeft = function(){
+            $("#PlayerInfoContainer").animate({
+                marginLeft: -320
+            }, 500);
+        };
+
+        var movePlayerInfoRight = function(){
+            $("#PlayerInfoContainer").animate({
+                marginLeft: 1
+            }, 500);
+        };
+
+        var showInfo = function(message){
+            $('#Info').html(message);
+            $('#Info').show('slow');
+        };
+
+        var hideInfo = function(){
+            $('#Info').hide('slow');
+        };
+
+        var populatePlayerSelector = function(playerJson){
+            var playerHtml="";
+            if(typeof(playerJson)=="undefined"){
+                playerHtml = "Ingen spillere funnet!";
+            }
+            else{
+                playerHtml += "<table>";
+                for(var i = 0; i < playerJson.length; i++){
+                    var className = utils.createClassNameFromTeamShortName(playerJson[i].team);
+                    var text = "<tr class='playerselector'>";
+                    text +="<td width='56%'><a href='" + playerJson[i].playerId + "' class='selectPlayerToBuy clublogo " + className +"' title='"+ playerJson[i].team +"'>"+  playerJson[i].lastName + ", " +  playerJson[i].firstName + "</a></td>";
+                    text += "<td width='37%'>" +utils.formatterTall(playerJson[i].price) + "</td>";
+                    text+= "<td width='10%'><a href='"+playerJson[i].playerId+"' class='previewPlayerStats'>&nbsp;</a></td></tr>"
+                    playerHtml += text;
+                }
+                playerHtml += "</table>";
+            }
+
+            $("#PlayerSelectorList").html(playerHtml);
+
+        };
+
+        var resetPlayerSelection = function(){
+            movePlayerInfoRight();
+        }
+
+        var updateTotalPrice = function(totalPrice){
+            $("#TotalPrice").html(utils.formatterTall(totalPrice));
+            var maxPrice = $("#MaxSeasonPrice").val();
+            $("#AmountAvailable").html(utils.formatterTall(maxPrice-totalPrice));
+        };
+
+        var updateTeamView = function(){
+
+            var teamData = jsonJS.getTeams();
+            var teamHtml = "<div id='TeamOverview'>";
+            for(var i = 0; i < teamData.length; i++){
+                var className = utils.createClassNameFromTeamShortName(teamData[i].shortName);
+                teamHtml += "<span><a href='"+teamData[i].teamId+"' class='team "+className+"'>" + teamData[i].shortName + "</a></span>";
+            }
+            teamHtml +="</div>"
+            $("#tab-2").html(teamHtml);
+        };
+
+        var changeFormation = function(formation){
+            debug.debug("changeFormation");
+            $.post("${pageContext.request.contextPath}/tpl/fantasyteamround/changeformation", {formation: formation}, function(){
+                updateFantasTeam();
+            });
+        }
+
+        var togglePlayerView = function(){
+            resetPlayerSelection();
+            var fieldIsVisible = $("#Field").hasClass("hidden");
+            if(fieldIsVisible){
+                $("#Field").removeClass("hidden");
+                $("#PlayerList").addClass("hidden");
+                $("#ViewPlayerlist").removeClass("hidden");
+                $("#ViewField").addClass("hidden");
+            }
+            else{
+                $("#Field").addClass("hidden");
+                $("#PlayerList").removeClass("hidden");
+                $("#ViewPlayerlist").addClass("hidden");
+                $("#ViewField").removeClass("hidden");
+            }
+        }
+
+        this.updateTimeToRoundCloses = function(){
+            debug.debug("updateTimeToRoundCloses");
+            var now = new Date();
+
+            var timeToCloseInMs = closeTimeInMS - now.getTime();
+            if(timeToCloseInMs < 1){
+                $("#CountDown").html("Runden er stengt");
+                clearInterval(timerTimeOut);
+
+            }else{
+                debug.debug("Tid igjen: " + timeToCloseInMs);
+                calculateTime(timeToCloseInMs);
+            }
+
+        }
+
+        var calculateTime = function(timeInMs){
+            var minuteInMS =1000*60;
+            if(timeInMs < minuteInMS){
+                $("#CountDown").html("Runden stenger når som helst");
+                return;
+            }
+            var hourInMS = minuteInMS * 60;
+            var dayInMs = hourInMS * 24;
+
+            var days = getNumberOfTimeElements(dayInMs, timeInMs);
+            timeInMs = timeInMs - (dayInMs*days);
+            var hours = getNumberOfTimeElements(hourInMS, timeInMs);
+            timeInMs = timeInMs - (hourInMS*hours);
+            var minutes = getNumberOfTimeElements(minuteInMS, timeInMs);
+            var text =  "Runden stenger om ";
+            debug.debug("Days: " + days + ", hour: " + hours + ", min: " + minutes);
+
+            if(days > 0){
+                $("#Day .number").html(days);
+                $("#Day .description").html(days == 1 ?  "dag": "dager");
+            }
+            else{
+                $("#Day").addClass("hidden");
+
+            }if(hours > 0){
+                $("#Hour .number").html(hours);
+                $("#Hour .description").html(hours == 1 ?  "time": "timer");
+            }
+            else{
+                $("#Hour").addClass("hidden");
+
+            }
+            if(minutes > 0){
+                $("#Minute .number").html(minutes);
+                $("#Minute .description").html(minutes == 1 ?  "minutt": "minutter");
+            }
+            else{
+                $("#Minute").addClass("hidden");
+
+            }
+
+        }
+
+        var getNumberOfTimeElements = function(intervalInMs, timeInMs){
+            var numberOfElements = Math.floor(timeInMs/intervalInMs);
+            return numberOfElements > 0 ? numberOfElements : 0;
+        }
+
+        var updateFantasTeam = function(){
+            debug.debug("updateFantasTeam");
+            var fantasyTeamRoundJson = jsonJS.getPlayersForFantasyTeam(fantasyRoundId);
+
+            updateFieldView(fantasyTeamRoundJson.players);
+            updatePrice(fantasyTeamRoundJson.players);
+            updateFormation(fantasyTeamRoundJson.formation);
+
+            updateListView(fantasyTeamRoundJson.players);
+            updateOfficialTeam(fantasyTeamRoundJson.official, fantasyTeamRoundJson.officialwhenroundisclosed);
+
+        }
+
+        var updateFieldView = function(playersJson){
+            debug.debug("updateFieldView");
+            $("#Field .viewPlayer").remove();
+            for(var i = 0; i < playersJson.length;i++){
+                var playerHtml = createPlayerHtmlForFields(playersJson[i]);
+                var formationPosition = playersJson[i].formationPosition;
+                if(formationPosition.indexOf("GOALKEEPER") != -1){
+                    $("#Field #Keeper").append(playerHtml);
+                }else if(formationPosition.indexOf("DEFENDER")!= -1){
+                    $("#Field #Defender").append(playerHtml);
+                }
+                else if(formationPosition.indexOf("MIDFIELDER")!= -1){
+                    $("#Field #Midfielder").append(playerHtml);
+
+                }else if(formationPosition.indexOf("STRIKER")!= -1){
+                    $("#Field #Striker").append(playerHtml);
+                }
+            }
+            setLeftOffset("#Defender .viewPlayer", "#Defender");
+            setLeftOffset("#Midfielder .viewPlayer","#Midfielder");
+            setLeftOffset("#Striker .viewPlayer","#Striker");
+
+        }
+
+        var updateListView = function(playersJson){
+            var html = "<table class='playerTableList'>"
+            var numberOfDefenders = $("#Defender .viewPlayer").length;
+            var numberOffMidfielders = $("#Midfielder .viewPlayer").length;
+            var numberOffStrikers = $("#Striker .viewPlayer").length;
+            formation.init(numberOfDefenders,numberOffMidfielders,numberOffStrikers);
+            for(var i = 0; i < playersJson.length;i++){
+                html += createPlayerHtmlForList(playersJson[i],formation.getPositionForIndex(i));
+            }
+            html += "</table>";
+            $("#PlayerList").html(html);
+            formatPrice();
+        }
+
+        var createPlayerHtmlForList= function(player, position){
+
+            var html = "<tr>";
+            if(player.playerPosition == "UNKNOWN"){
+                html += "<td>"+ position + "</td><td colspan='3' class='availablePlayer'><a id='"+ player.formationPosition + "' href='-1' class='buyPlayer'></a></td>"
+            }else{
+                html += "<td><span class='logowrapper "+utils.createClassNameFromTeamShortName(player.team) + "'></span><a id='" + player.formationPosition + "' class='player playerselect' href='" + player.playerId+ "' title='" + player.firstName + " " + player.lastName + " - " + player.team + "'>"+player.lastName+"</a></td>"
+                html += "<td>"+ player.playerPosition + "</td>"
+                html += "<td><span class='price'>"+ player.price + "</span></td>"
+                html += "<td><a href='" + player.formationPosition+ "' class='playerdelete' title='Selg spiller' >&nbsp;</a></td>"
+            }
+            html +="</tr>"
+            return html;
+        }
+
+        var formatPrice = function(){
+            $(".price").each(function(){
+                $(this).html(utils.formatterTall($(this).html()));
+            });
+        }
+
+        var setLeftOffset = function(selector, parent){
+            var numberOffPlayers = $(selector).length;
+            if(numberOffPlayers == 1){
+               $(parent).css("left", onePlayersOffset + "px");
+            }
+            if(numberOffPlayers == 2){
+                $(parent).css("left", twoPlayersOffset + "px");
+            }
+            if(numberOffPlayers == 3){
+                $(parent).css("left", threePlayersOffset + "px");
+            }
+            if(numberOffPlayers == 4){
+                $(parent).css("left", fourPlayersOffset + "px");
+            }
+            if(numberOffPlayers == 5){
+                $(parent).attr("style",null);
+            }
+
+        }
+
+        var createPlayerHtmlForFields= function(player){
+            var html = "<div class='viewPlayer'>";
+            html += createTopElementForPlayerField(player);
+            html += createMiddleElementForPlayerField(player);
+            html += createBottomElementForPlayerField(player);
+            html +="</div>"
+            return html;
+        }
+                
+        var createTopElementForPlayerField = function(player) {
+            var tophtml = "<div class='top'><a href='" + player.formationPosition + "'";
+            if (player.playerId < 1) {
+                tophtml += " style='display:none;'"
+            }
+            tophtml += " class='playerdelete' title='Selg spiller'>&nbsp;</a></div>";
+            return tophtml;
+        }
+
+        var createMiddleElementForPlayerField = function(player) {
+            var middlehtml = "<div class='middle'>";
+            if (player.playerId > 1) {
+                middlehtml += "<span class='logowrapper "+utils.createClassNameFromTeamShortName(player.team) + "'></span>";
+                middlehtml += "<a id='" + player.formationPosition + "' class='player playerselect' href='" + player.playerId+ "' title='" + player.firstName + " " + player.lastName + " - " + player.team + "'>";
+                middlehtml +=  player.lastName;
+                middlehtml += "</a>";
+            }else{
+                middlehtml +="<a id='"+ player.formationPosition + "' href='-1' class='buyPlayer'></a>"
+            }
+            middlehtml += "</div>"
+            return middlehtml;
+        }
+
+        var createBottomElementForPlayerField = function(player) {
+            var bottomhtml = "<div class='bottom'></div>";
+            return bottomhtml;
+        }
+
+        var updateFormation= function(formation){
+            $("#FormationSelector").html(formation);
+        }
+
+        var updatePrice = function(playersJson){
+            var price = 0;
+
+
+            for(var i = 0; i < playersJson.length;i++){
+                price += playersJson[i].price;
+            }
+            updateTotalPrice(price);
+        }
+
+        this.updateOfficialTeams = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/officialTeamRound?fantasyRoundId=" + fantasyRoundId, function(data){
+                $("#tab-3").html(data);
+                $("#tab-3 tr td:first-child span").each(function(){
+                    var className = utils.createClassNameFromTeamShortName($(this).attr("class"));
+                    $(this).attr("class", className);
+                });
+            });
+        }
+
+        var updateMinMaxPrice = function(){
+            $("#MinPrice").html(utils.formatterTall(minPrice));
+            $("#MaxPrice").html(utils.formatterTall(maxPrice));
+        };
+
+        var getPlayersForPosition = function(){
+            standard.setWait("#PlayerSelectorList", "wait");
+            var position = $("#PlayerSelector [name=position]").val();
+            playerJsonArray = jsonJS.getPlayersForPosition(position);
+            populatePlayerSelector(playerJsonArray);
+        }
+
+        var updateStatsTable = function() {
+            var attribute = $("#AttributeStatsSelector .selected").attr("href");
+            var numberOf = $("#NumberOfStatsSelector .selected").attr("href");
+            var best = $("#Good_Bad_StatsSelector .selected").attr("href");
+            var position = $("#PositionStatsSelector .selected").attr("href");
+            var numberOfRounds = $("#RoundStatsSelector .selected").attr("href");
+            var teamId = $("#TeamIdSelector").val();
+            var url = "${pageContext.request.contextPath}/tpl/playerstats/simpleplayerstats";
+            url += "?attribute=" + attribute;
+            url += "&numberOf=" + numberOf;
+            url += "&best=" + best;
+            if (position != "All") {
+                url += "&position=" + position;
+            }
+            if (numberOfRounds != "All") {
+                url += "&numberOfRounds=" + numberOfRounds;
+            }
+            if(teamId > 0){
+                url += "&teamId=" + teamId;
+            }
+            $.get(url, function(data) {
+                $("#PlayerStatsResults").html(data);
+            });
+        }
+
+        var showStatsArrows = function(){
+            var lastHref = $("#AttributeStatsSelector span a:last").attr("href");
+            var selectedHref =$("#AttributeStatsSelector .selected").attr("href");
+            var firstHref = $("#AttributeStatsSelector span a:first").attr("href") ;
+            if( lastHref== selectedHref ){
+                $("#MoveAttributesRight").hide();
+            }else{
+                $("#MoveAttributesRight").show();
+            }
+
+            if(selectedHref== firstHref){
+                $("#MoveAttributesLeft").hide();
+            }else{
+                $("#MoveAttributesLeft").show();
+            }
+        }
+
+        var updatePlayerStats = function(preSelector, playerStats){
+            $(preSelector +" #PlayerName").html(playerStats.Player.firstName + " " + playerStats.Player.lastName );
+            $(preSelector +" #PlayerPosition").html(playerStats.Player.playerPosition);
+            $(preSelector +" #PlayerTeam").html(playerStats.Player.team);
+            $(preSelector +" #PlayerPrice").html(utils.formatterTall(playerStats.Player.price));
+            $(preSelector +" #PlayerMatches").html(playerStats.Player.playedMatches);
+            $(preSelector +" #PlayerPoints").html(playerStats.Player.points);
+            $(preSelector +" #PlayerGoals").html(playerStats.Player.goals);
+            $(preSelector +" #PlayerAssists").html(playerStats.Player.assists);
+            $(preSelector +" #PlayerOwnGoals").html(playerStats.Player.ownGoal);
+            $(preSelector +" #PlayerSavedPenalty").html(playerStats.Player.savedPenalty);
+            $(preSelector +" #PlayerYellowCards").html(playerStats.Player.yellowCard);
+            $(preSelector +" #PlayerRedCards").html(playerStats.Player.redCard);
+            $(preSelector +" #PlayerStartedGame").html(playerStats.Player.startedGame);
+
+        }
+
+        var createMostUsedPlayerHtml = function(playerJson){
+            var playerHtml = "<table id='StandardTable' class='defaultTable'><thead><tr><th>Navn</th><th>Pris</th><th>Posisjon</th><th>Antall</th></tr> </thead><tbody>";
+            for(var i = 0; i < playerJson.length; i++){
+                var className = playerJson[i].team.toLowerCase().split(' ').join('');
+                var text = "<tr>";
+                text +="<td><a href='" + playerJson[i].playerId + "' class='clublogo player "+className+"'>"+  playerJson[i].lastName + ", " +  playerJson[i].firstName + "</a></td>";
+                text += "<td>" +utils.formatterTall(playerJson[i].price) + "</td>";
+                text += "<td>" +playerJson[i].playerPosition + "</td>";
+                text += "<td>" +playerJson[i].numberOfUsages + "</td>";
+                text+= "</tr>"
+                playerHtml += text;
+            }
+            playerHtml += "</tbody></table>";
+            return playerHtml;
+        }
+
+        var updateNumberOfOfficialTeams = function(){
+            var messageRespons = jsonJS.getNumberOfOfficalTeams();
+            debug.debug(messageRespons);
+            $("#NumberOfOfficalTeams").html(messageRespons.ant_blotta_lag);
+            $("#NumberOfOfficalTeamsWhenTeamIsClosing").html(messageRespons.ant_som_e_blotta_naar_runden_stenge);
+        }
+
+        var updateOfficialTeam = function(official,officialwhenroundisclosed){
+            debug.debug("Offical team: " + official);
+            if(official){
+                debug.debug("Offical team: adding class");
+                $("#BlottTeam").addClass("blotta");
+                $("#BlottTvert").attr("checked","checked");
+            }
+
+            if(officialwhenroundisclosed){
+                $("#BlottNarRundenstenge").attr("checked","checked");
+            }
+        }
+
+        var applyFantasyOpenListeners = function() {
+            debug.debug("tpl.Fantasy.applyOpenListeners");
+
+            $("#PriceSlider" ).slider({
+                range: true,
+                min: 0,
+                max: 20000000,
+                step:500000,
+                values: [ 0, 20000000 ],
+                slide: function( event, ui ) {
+                    minPrice = ui.values[ 0 ];
+                    maxPrice = ui.values[ 1 ]
+                    updateMinMaxPrice();
+                    filterPlayerJson();
+                }
+            });
+
+            $(".faner a").click(function(event){
+                event.preventDefault();
+            });
+
+            $(".playerselect").live("click", function(event){
+                event.preventDefault();
+                var $ths = this;
+                var playerId = $($ths).attr("href");
+                var seasonId = $("#SeasonId").val();
+                var playerStats = jsonJS.getSumPlayerStats(playerId, seasonId);
+                updatePlayerStats("#PlayerView",playerStats);
+                playerPositionToBuy = "";
+                movePlayerInfoRight();
+            });
+
+            $("#SearchTerm").keyup(function(){
+                searchText = $("#SearchTerm").attr("value");
+                filterPlayerJson();
+            });
+
+            $(".buyPlayer").live("click", function(event){
+                event.preventDefault();
+                movePlayerInfoLeft();
+                var $ths = this;
+                var position = $($ths).attr("id").match(/[aA-zZ]+/g);
+                $('#PlayerSelector  option[value='+position+']').attr('selected', 'selected');
+                getPlayersForPosition();
+                filterPlayerJson();
+                $(".buyPlayer").removeClass("selected");
+                $($ths).addClass("selected");
+                playerPositionToBuy = $($ths).attr("id");
+            });
+
+            $(".selectPlayerToBuy").live("click", function(event){
+                event.preventDefault();
+                scroll(0,0);
+                var $ths = this;
+                var playerId = $($ths).attr("href");
+                movePlayerInfoRight();
+                var playerbought = false;
+                var messageRespons= jsonJS.addPlayerToTeam(playerPositionToBuy, playerId);
+
+                showInfo(messageRespons.Message.text);
+                playerbought = messageRespons.Message.saved;
+
+                if(playerbought){
+                    $(".playerdelete[href="+playerPositionToBuy+"]").show();
+                    var playerName =  $($ths).html();
+                    updateFantasTeam();
+
+                }
+                $("body").scrollTop();
+                playerPositionToBuy = "";
+
+            });
+
+            $("#Teamoverview").live("click", function(event){
+                event.preventDefault();
+                updateTeamView();
+            });
+
+            $(".playerdelete").live("click", function(event){
+                event.preventDefault()
+                var $ths = this;
+                var playerPositionToSell = $($ths).attr("href");
+                var messageRespons= jsonJS.removePlayerFromTeam(playerPositionToSell);
+                var removed = messageRespons.Message.removed;
+                showInfo(messageRespons.Message.text);
+                if(removed){
+                    updateFantasTeam();
+                }
+            });
+
+            $("#BlottTeam").click(function(){
+                updateNumberOfOfficialTeams();
+                $("#BlottPopup").removeClass("hidden");
+            });
+
+            $("#BlottTvert").change(function(event){
+                var isChecked = $("#BlottTvert").attr("checked");
+                var messageRespons = jsonJS.officialTeam(isChecked);
+                if(! isChecked){
+                    $("#BlottTeam").removeClass("blotta")
+                }else{
+                    $("#BlottTeam").addClass("blotta")
+                }
+                showInfo(messageRespons.Message.text);
+                fantasy.updateOfficialTeams();
+                updateNumberOfOfficialTeams();
+            });
+
+            $("#BlottNarRundenstenge").change(function(event){
+                var isChecked = $("#BlottNarRundenstenge").attr("checked");
+                var messageRespons = jsonJS.officialTeamWhenRoundIsClosed(isChecked);
+                showInfo(messageRespons.Message.text);
+                updateNumberOfOfficialTeams();
+
+            });
+
+            $(".player").live("click", function(event){
+                event.preventDefault();
+                var playerId  = $(this).attr("href");
+                var seasonId = $("#SeasonId").val();
+                var url = "${pageContext.request.contextPath}/tpl/playerstats/playerstats";
+                url += "?playerId=" + playerId;
+                url += "&seasonId=" + seasonId;
+                $.get(url, function(data){
+                    $("#tab-2").html(data);
+                    $("#Statistics").tabs({selected: 1});
+                });
+
+            });
+
+            $("#Statistics .team").live("click", function(event){
+                event.preventDefault();
+                var teamId = $(this).attr("href");
+                var playerJson = jsonJS.getPlayerByTeamId(teamId);
+                var playerHtml = "<a id='Teamoverview' class='button'>Tilbake til lagoversikt</a><br><br>";
+
+                playerHtml += "<table id='StandardTable' class='tablesorter defaultTable'><thead><tr><th>Navn</th><th>Pris</th><th>Posisjon</th></tr> </thead><tbody>";
+                for(var i = 0; i < playerJson.length; i++){
+                    var className = playerJson[i].team.toLowerCase().split(' ').join('');
+                    var text = "<tr>";
+                    text +="<td><a href='" + playerJson[i].playerId + "' class='player' title='Match statisitkk'>"+  playerJson[i].lastName + ", " +  playerJson[i].firstName + "</a></td>";
+                    text += "<td>" +utils.formatterTall(playerJson[i].price) + "</td>";
+                    text += "<td>" +playerJson[i].playerPosition + "</td>";
+                    text+= "</tr>"
+                    playerHtml += text;
+                }
+                playerHtml += "</tbody></table>";
+                $("#tab-2").html(playerHtml);
+                $("#tab-2 #StandardTable").tablesorter();
+
+            });
+
+            $(".PreviousOfficialTeam").live("click", function(){
+                var leftMargin = parseInt($("#OfficialTeamRoundWrapper").css("margin-left"));
+
+                $("#OfficialTeamRoundWrapper").animate({
+                    marginLeft: leftMargin + 600
+
+                }, 500);
+            });
+
+            $(".NextOfficialTeam").live("click", function(){
+                var leftMargin = parseInt($("#OfficialTeamRoundWrapper").css("margin-left"));
+                $("#OfficialTeamRoundWrapper").animate({
+                    marginLeft:leftMargin - 600
+                }, 500);
+            });
+
+            $("#EditPlayer").live("click", function(){
+                var playerId = $("#PlayerId").val();
+                $.get("${pageContext.request.contextPath}/tpl/player/edit?playerId=" + playerId, function(data){
+                    $("#tab-2").html(data);
+                });
+            });
+
+            $("#EditPlayerForm").live("submit", function(event){
+                event.preventDefault();
+                var dataString = $(this).serialize();
+                standard.setWait("#tab-2", "wait");
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: "POST",
+                    data:  dataString,
+                    complete: function(data){
+                        $('#tab-2').html(data.responseText);
+                    }
+                });
+            });
+
+            $("#PlayerStats a.statsSelector").click(function(event){
+                event.preventDefault();
+                var $ths = this;
+                $($ths).parent().find("a").removeClass("selected");
+                $($ths).addClass("selected");
+                updateStatsTable();
+            });
+
+            $("#TeamIdSelector").change(function(event){
+                updateStatsTable();
+            });
+
+            $("#MoveAttributesLeft").click(function(event){
+                event.preventDefault();
+                var selectedElement = $("#AttributeStatsSelector .selected");
+                $(selectedElement).removeClass("selected");
+                $(selectedElement).addClass("hidden");
+                $(selectedElement).prev().addClass("selected");
+                $(selectedElement).prev().removeClass("hidden");
+                showStatsArrows();
+                updateStatsTable();
+            });
+
+            $("#MoveAttributesRight").click(function(event){
+                event.preventDefault();
+                var selectedElement = $("#AttributeStatsSelector .selected");
+                $(selectedElement).removeClass("selected");
+                $(selectedElement).addClass("hidden");
+                $(selectedElement).next().addClass("selected");
+                $(selectedElement).next().removeClass("hidden");
+                showStatsArrows();
+                updateStatsTable();
+            });
+
+            $(".previewPlayerStats").live("click", function(event){
+                event.preventDefault();
+                var playerId = $(this).attr("href");
+                var position = $(this).offset();
+                var seasonId = $("#SeasonId").val();
+                var playerStats = jsonJS.getSumPlayerStats(playerId, seasonId);
+                updatePlayerStats("#PlayerPreView", playerStats);
+                $("#PlayerPreView").removeClass("hidden");
+                $("#PlayerPreView").css("top", position.top);
+                $("#PlayerPreView").css("left", position.left);
+            });
+            $("*").click(function(){
+                $("#PlayerPreView").addClass("hidden");
+                hideInfo();
+            });
+
+            $("#MostUsedPlayersButton").click(function(){
+                var playerJson = jsonJS.getMostUsedPlayers();
+                $("#MostUsedPlayers").html(createMostUsedPlayerHtml(playerJson));
+            });
+            $("#MostUsedPlayersInRoundButton").click(function(){
+                var playerJson = jsonJS.getMostUsedPlayersInRound();
+                $("#MostUsedPlayers").html(createMostUsedPlayerHtml(playerJson));
+            });
+
+            $("#MostUsedPlayersForTeamButton").click(function(){
+                var playerJson = jsonJS.getMostUsedPlayersForTeam();
+                $("#MostUsedPlayers").html(createMostUsedPlayerHtml(playerJson));
+            });
+
+            $("#MostUsedPlayersAsTeamForTeamButton").click(function(){
+                var playerJson = jsonJS.getMostUsedPlayersAsTeamForTeam();
+                $("#MostUsedPlayers").html(createMostUsedPlayerHtml(playerJson));
+            });
+
+            $("#FantasyMatchStats").click(function(){
+                $("#StatsWrapper").load("${pageContext.request.contextPath}/tpl/fantasy/match/matchstats");
+            });
+            $("#MatchStats").click(function(){
+                $("#StatsWrapper").load("${pageContext.request.contextPath}/tpl/league/match/matchstats");
+            });
+
+            $(".formationElement").live("click", function(event){
+                event.preventDefault();
+
+                var newFormation = $(this).attr("href");
+                debug.debug("ny formasjon:" + newFormation);
+                changeFormation(newFormation);
+                $("#HideFormationSelector").trigger("click");
+            });
+
+            $("#HideFormationSelector").live("click", function(){
+                //TODO: add fancy in out transition
+                //TODO: add fantasyround closed
+                $("#ViewFormationSelection").removeClass("hidden");
+                $("#HideFormationSelector").addClass("hidden");
+                $("#FormationPicker").addClass("hidden");
+            });
+
+            $("#ViewFormationSelection").live("click", function(){
+                $("#ViewFormationSelection").addClass("hidden");
+                $("#HideFormationSelector").removeClass("hidden");
+                $("#FormationPicker").removeClass("hidden");
+            });
+
+            $(".toggleView").click(function(event){
+                event.preventDefault();
+                togglePlayerView();
+            });
+
+        }
+    }
+
+};
+var fantasy = new tpl.Fantasy();
+
+
+$(document).ready(function(){
+    debug.debug("tpl.Fantasy.init");
+    fantasy.init();
+});

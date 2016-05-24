@@ -1,0 +1,29 @@
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<table>
+    <thead>
+    <tr>
+        <th><spring:message code="team.fullName"/></th>
+        <th><spring:message code="team.shortName"/></th>
+        <th><spring:message code="team.externalId"/></th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="team" items="${teams}">
+            <tr>
+                <td><c:out value="${team.fullName}"/></td>
+                <td><c:out value="${team.shortName}"/></td>
+                <td><c:out value="${team.externalId}"/></td>
+                <td>
+                    <c:if test="${editTeams}">
+                        <a class="edit adminLink" href="${pageContext.request.contextPath}/tpl/admin/team/edit?teamId=${team.teamId}" title="<spring:message code='team.edit'/> ${team.shortName}">&nbsp;</a>
+                    </c:if>
+                </td>
+
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>

@@ -1,0 +1,133 @@
+//<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+var tpl = {
+
+    FantasyLeague : function(){
+        var fantasyLeagueId;
+        var maxRoundNumber;
+        this.init = function(){
+            debug.debug("tpl.FantasyLeague.init.function");
+            applyFantasyOpenLeagueListeners();
+            fantasyLeagueId = $("#FantasyLeagueSelector option:first").val();
+            updateLeagueOverview();
+        };
+
+        this.setMaxRoundNumber = function(number){
+            maxRoundNumber = number;
+        }
+
+        var applyFantasyOpenLeagueListeners = function() {
+            debug.debug("tpl.Fantasy.openLeagueListeners");
+            $("#FantasyLeagueSelector").change(function(){
+                fantasyLeagueId = $("#FantasyLeagueSelector option:selected").val();
+                updateLeagueOverview();
+
+            });
+            $("#RoundUp").live("click",function(event){
+                debug.debug("RoundUp")
+                event.preventDefault();
+                increaseRound();
+            });
+            $("#RoundDown").live("click",function(event){
+                debug.debug("RoundDown")
+                event.preventDefault();
+                decreaseRound();
+            });
+            $("#SeasonSelect").change(function(event){
+                $("#SeasonForm").submit();
+            });
+        };
+
+        this.updateForm = function( numberOfRounds){
+            debug.debug("update form: " + numberOfRounds);
+            showOrHideRoundSelector(numberOfRounds);
+            standard.setWait("#FormTableWrapper","wait");
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/form?numberOfRounds=" +numberOfRounds+ "&fantasyLeagueId="+fantasyLeagueId, function(data){
+                $("#FormTableWrapper").html(data);
+                $("#FormTable").tablesorter();
+
+            });
+            var text = "Form siste " +numberOfRounds + " runder";
+            if(numberOfRounds == 1){
+                text = "Siste runde";
+            }
+            $("#FormRoundNumber").html(text);
+        }
+
+        var updateLeagueOverview = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/fantasyleagueoverview?fantasyLeagueId=" +fantasyLeagueId, function(data){
+                $("#FantasyLeague").html(data);
+                $("#FantasyLeagueTabs").tabs();
+            });
+            updateTable();
+            updateFixtures();
+            updatePlayedMatches();
+            updateWhore();
+        }
+
+        var updateTable = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/standings?fantasyLeagueId=" +fantasyLeagueId, function(data){
+                $("#league-1").html(data);
+                $("#StandardTable").tablesorter();
+            });
+        }
+
+        var updateFixtures = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/fixtures?fantasyLeagueId=" +fantasyLeagueId, function(data){
+                $("#league-3").html(data);
+            });
+        }
+
+        var updatePlayedMatches = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/playedmatches?fantasyLeagueId=" +fantasyLeagueId, function(data){
+                $("#league-2").html(data);
+            });
+        }
+
+        var updateWhore = function(){
+            $.get("${pageContext.request.contextPath}/tpl/fantasy/league/whorestandings?fantasyLeagueId=" +fantasyLeagueId, function(data){
+                $("#league-5").html(data);
+                $("#StandardTable").tablesorter();
+            });
+        }
+
+
+        var showOrHideRoundSelector = function(roundNumber){
+            $("#RoundDown").removeClass("hidden");
+            $("#RoundUp").removeClass("hidden");
+            if(roundNumber == 1){
+                $("#RoundDown").addClass("hidden");
+            }
+            if(roundNumber == maxRoundNumber){
+
+                $("#RoundUp").addClass("hidden");
+            }
+        }
+
+        var decreaseRound = function(){
+            var roundNumber = $("#FormSelector [selected=selected]").val();
+            debug.debug("dec:"+roundNumber);
+            roundNumber--;
+            if(roundNumber < 1){
+                roundNumber = 1;
+            }
+            $("#FormSelector [selected=selected]").removeAttr("selected");
+            $("#FormSelector [value="+roundNumber+"]").attr("selected","selected");
+            fantasyLeague.updateForm(roundNumber);
+        }
+
+        var increaseRound = function(){
+            var roundNumber = $("#FormSelector [selected=selected]").val();
+
+            if(roundNumber <= maxRoundNumber){
+                roundNumber++;
+            }
+            $("#FormSelector [selected=selected]").removeAttr("selected");
+            $("#FormSelector [value="+roundNumber+"]").attr("selected","selected");
+            fantasyLeague.updateForm(roundNumber);
+        }
+    }
+};
+var fantasyLeague = new tpl.FantasyLeague();
+
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+        version="2.4">
+  <display-name>@projectname@</display-name>
+
+  <description>@projectname@</description>
+
+    <!-- Use this to override the Spring root context for the project -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext-project.xml</param-value>
+    </context-param>
+
+
+    <filter>
+        <filter-name>ParamEncodingFilter</filter-name>
+        <filter-class>no.kantega.commons.filter.ParamEncodingFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ParamEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>tpl</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.jsp</location>
+    </error-page>
+
+    <servlet-mapping>
+        <servlet-name>tpl</servlet-name>
+        <url-pattern>/tpl/*</url-pattern>
+    </servlet-mapping>
+    <!-- jjs = Dynamic (jsp) JavaScript files -->
+    <servlet-mapping>
+        <servlet-name>jsp</servlet-name>
+        <url-pattern>*.jjs</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>480</session-timeout>
+    </session-config>
+
+</web-app>
