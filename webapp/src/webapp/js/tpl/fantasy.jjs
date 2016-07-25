@@ -15,7 +15,7 @@ var tpl = {
         var closeTimeInMS
         var timerTimeOut;
         this.init = function(){
-            debug.debug("tpl.Fantasy.init.function");
+            console.info("tpl.Fantasy.init.function");
             fantasyRoundId = $("#FantasyRoundId").val();
             closeTimeInMS = $("#CloseTime").val();
             applyFantasyOpenListeners();
@@ -132,7 +132,7 @@ var tpl = {
         };
 
         var changeFormation = function(formation){
-            debug.debug("changeFormation");
+            console.info("changeFormation");
             $.post("${pageContext.request.contextPath}/tpl/fantasyteamround/changeformation", {formation: formation}, function(){
                 updateFantasTeam();
             });
@@ -156,7 +156,7 @@ var tpl = {
         }
 
         this.updateTimeToRoundCloses = function(){
-            debug.debug("updateTimeToRoundCloses");
+            console.info("updateTimeToRoundCloses");
             var now = new Date();
 
             var timeToCloseInMs = closeTimeInMS - now.getTime();
@@ -165,7 +165,7 @@ var tpl = {
                 clearInterval(timerTimeOut);
 
             }else{
-                debug.debug("Tid igjen: " + timeToCloseInMs);
+                console.info("Tid igjen: " + timeToCloseInMs);
                 calculateTime(timeToCloseInMs);
             }
 
@@ -174,7 +174,7 @@ var tpl = {
         var calculateTime = function(timeInMs){
             var minuteInMS =1000*60;
             if(timeInMs < minuteInMS){
-                $("#CountDown").html("Runden stenger når som helst");
+                $("#CountDown").html("Runden stenger nï¿½r som helst");
                 return;
             }
             var hourInMS = minuteInMS * 60;
@@ -186,7 +186,7 @@ var tpl = {
             timeInMs = timeInMs - (hourInMS*hours);
             var minutes = getNumberOfTimeElements(minuteInMS, timeInMs);
             var text =  "Runden stenger om ";
-            debug.debug("Days: " + days + ", hour: " + hours + ", min: " + minutes);
+            console.info("Days: " + days + ", hour: " + hours + ", min: " + minutes);
 
             if(days > 0){
                 $("#Day .number").html(days);
@@ -220,7 +220,7 @@ var tpl = {
         }
 
         var updateFantasTeam = function(){
-            debug.debug("updateFantasTeam");
+            console.info("updateFantasTeam");
             var fantasyTeamRoundJson = jsonJS.getPlayersForFantasyTeam(fantasyRoundId);
 
             updateFieldView(fantasyTeamRoundJson.players);
@@ -233,7 +233,7 @@ var tpl = {
         }
 
         var updateFieldView = function(playersJson){
-            debug.debug("updateFieldView");
+            console.info("updateFieldView");
             $("#Field .viewPlayer").remove();
             for(var i = 0; i < playersJson.length;i++){
                 var playerHtml = createPlayerHtmlForFields(playersJson[i]);
@@ -461,15 +461,15 @@ var tpl = {
 
         var updateNumberOfOfficialTeams = function(){
             var messageRespons = jsonJS.getNumberOfOfficalTeams();
-            debug.debug(messageRespons);
+            console.info(messageRespons);
             $("#NumberOfOfficalTeams").html(messageRespons.ant_blotta_lag);
             $("#NumberOfOfficalTeamsWhenTeamIsClosing").html(messageRespons.ant_som_e_blotta_naar_runden_stenge);
         }
 
         var updateOfficialTeam = function(official,officialwhenroundisclosed){
-            debug.debug("Offical team: " + official);
+            console.info("Offical team: " + official);
             if(official){
-                debug.debug("Offical team: adding class");
+                console.info("Offical team: adding class");
                 $("#BlottTeam").addClass("blotta");
                 $("#BlottTvert").attr("checked","checked");
             }
@@ -480,7 +480,7 @@ var tpl = {
         }
 
         var applyFantasyOpenListeners = function() {
-            debug.debug("tpl.Fantasy.applyOpenListeners");
+            console.info("tpl.Fantasy.applyOpenListeners");
 
             $("#PriceSlider" ).slider({
                 range: true,
@@ -748,7 +748,7 @@ var tpl = {
                 event.preventDefault();
 
                 var newFormation = $(this).attr("href");
-                debug.debug("ny formasjon:" + newFormation);
+                console.info("ny formasjon:" + newFormation);
                 changeFormation(newFormation);
                 $("#HideFormationSelector").trigger("click");
             });
@@ -780,6 +780,6 @@ var fantasy = new tpl.Fantasy();
 
 
 $(document).ready(function(){
-    debug.debug("tpl.Fantasy.init");
+    console.info("tpl.Fantasy.init");
     fantasy.init();
 });

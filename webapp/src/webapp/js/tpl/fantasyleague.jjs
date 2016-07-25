@@ -5,7 +5,7 @@ var tpl = {
         var fantasyLeagueId;
         var maxRoundNumber;
         this.init = function(){
-            debug.debug("tpl.FantasyLeague.init.function");
+            console.info("tpl.FantasyLeague.init.function");
             applyFantasyOpenLeagueListeners();
             fantasyLeagueId = $("#FantasyLeagueSelector option:first").val();
             updateLeagueOverview();
@@ -16,19 +16,19 @@ var tpl = {
         }
 
         var applyFantasyOpenLeagueListeners = function() {
-            debug.debug("tpl.Fantasy.openLeagueListeners");
+            console.info("tpl.Fantasy.openLeagueListeners");
             $("#FantasyLeagueSelector").change(function(){
                 fantasyLeagueId = $("#FantasyLeagueSelector option:selected").val();
                 updateLeagueOverview();
 
             });
             $("#RoundUp").live("click",function(event){
-                debug.debug("RoundUp")
+                console.info("RoundUp")
                 event.preventDefault();
                 increaseRound();
             });
             $("#RoundDown").live("click",function(event){
-                debug.debug("RoundDown")
+                console.info("RoundDown")
                 event.preventDefault();
                 decreaseRound();
             });
@@ -38,7 +38,7 @@ var tpl = {
         };
 
         this.updateForm = function( numberOfRounds){
-            debug.debug("update form: " + numberOfRounds);
+            console.info("update form: " + numberOfRounds);
             showOrHideRoundSelector(numberOfRounds);
             standard.setWait("#FormTableWrapper","wait");
             $.get("${pageContext.request.contextPath}/tpl/fantasy/league/form?numberOfRounds=" +numberOfRounds+ "&fantasyLeagueId="+fantasyLeagueId, function(data){
@@ -105,7 +105,7 @@ var tpl = {
 
         var decreaseRound = function(){
             var roundNumber = $("#FormSelector [selected=selected]").val();
-            debug.debug("dec:"+roundNumber);
+            console.info("dec:"+roundNumber);
             roundNumber--;
             if(roundNumber < 1){
                 roundNumber = 1;

@@ -9,7 +9,7 @@ var tpl = {
             positionOffset = offset;
         }
         this.init = function(){
-            debug.debug("tpl.Standard.init");
+            console.info("tpl.Standard.init");
             applyStandardOpenListeners();
 
         };
@@ -21,7 +21,7 @@ var tpl = {
         var applyStandardOpenListeners = function() {
             $(".matchselector").live("click",function(event){
                 event.preventDefault();
-                debug.debug("matchselector");
+                console.info("matchselector");
                 var position = $(this).offset();
                 var fantasyMatchId = $(this).attr("href");
 

@@ -5,7 +5,7 @@ var tpl = {
 
 
         this.init = function(){
-            debug.debug("tpl.JsonJS.init.function");
+            console.info("tpl.JsonJS.init.function");
         };
 
         this.getPlayerById = function(playerId){
@@ -146,6 +146,6 @@ var tpl = {
 var jsonJS = new tpl.JsonJS();
 
 $(document).ready(function(){
-    debug.debug("tpl.JsonJS.init");
+    console.info("tpl.JsonJS.init");
     jsonJS.init();
 });

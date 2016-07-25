@@ -6,7 +6,7 @@ var tpl = {
         var competiotionType;
 
         this.init = function(){
-            debug.debug("tpl.FantasyTeam.init.function");
+            console.info("tpl.FantasyTeam.init.function");
             applyFantasyOpenTeamListeners();
             fantasyTeamId = $("#FantasyTeamId").val();
             competiotionType = $("#FantasyCompetitionSelector option").first().attr("label");
@@ -14,9 +14,9 @@ var tpl = {
         };
 
         var applyFantasyOpenTeamListeners = function() {
-            debug.debug("tpl.Fantasy.openTeamListeners");
+            console.info("tpl.Fantasy.openTeamListeners");
             $("#FantasyCompetitionSelector").change(function(){
-                debug.debug("FantasyCompetitionSelector change");
+                console.info("FantasyCompetitionSelector change");
                 competiotionType = $("#FantasyCompetitionSelector option:selected").attr("label");
                 updateCompetition($("#FantasyCompetitionSelector option:selected").val());
             });
@@ -33,7 +33,7 @@ var tpl = {
         };
 
         var updateMathes = function(competitionId,competitionType){
-            debug.debug("update matches: " + competitionId + ", competitionType: " + competitionType)
+            console.info("update matches: " + competitionId + ", competitionType: " + competitionType)
             if(competitionType == tpl.competitiontype.FANTASYLEAGUE){
                 $.get("${pageContext.request.contextPath}/tpl/fantasyteam/viewfixtures?teamId=" + fantasyTeamId + "&fantasyLeagueId=" + competitionId, function(data){
                     $("#TeamFixtures").html(data);
@@ -52,7 +52,7 @@ var tpl = {
         }
 
         var updateCompetition = function(competitionid){
-            debug.debug("update competition: " + competitionid);
+            console.info("update competition: " + competitionid);
             if(competiotionType == tpl.competitiontype.FANTASYCOMPETITION){
                 $.get("${pageContext.request.contextPath}/tpl/fantasyteam/viewcompetitionteamstats?teamId="+fantasyTeamId +"&fantasyCompetitionId="+competitionid, function(data){
                     $("#TeamStats").html(data);

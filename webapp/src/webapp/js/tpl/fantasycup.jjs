@@ -5,14 +5,14 @@ var tpl = {
         var fantasyCupId;
 
         this.init = function(){
-            debug.debug("tpl.FantasyCup.init.function");
+            console.info("tpl.FantasyCup.init.function");
             applyFantasyOpenCupListeners();
             fantasyCupId = $("#FantasyCupSelector option:first").val();
             updateCupOverview();
         };
 
         var applyFantasyOpenCupListeners = function() {
-            debug.debug("tpl.Fantasy.openCupListeners");
+            console.info("tpl.Fantasy.openCupListeners");
             $("#FantasyCupSelector").change(function(){
                 fantasyCupId = $("#FantasyCupSelector option:selected").val();
                 updateCupOverview();

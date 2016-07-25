@@ -5,7 +5,7 @@ var tpl = {
         var maxNumberOfRounds;
 
         this.init = function(){
-            debug.debug("tpl.FantasyCompetition.init.function");
+            console.info("tpl.FantasyCompetition.init.function");
             $("#FantasyCompetitionTabs").tabs();
             $("#StandardTable").tablesorter();
             var fantasyTeamId = $("#FantasyTeamId").val();

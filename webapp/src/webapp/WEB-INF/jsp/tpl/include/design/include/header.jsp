@@ -24,7 +24,6 @@
     <script type="text/javascript" src="<aksess:geturl url="/js/common/jquery.cookie.js"/>"></script>
     <script type="text/javascript" src="<aksess:geturl url="/js/common/jquery-ui-1.8.13.custom.min.js"/>"></script>
     <script type="text/javascript" src="<aksess:geturl url="/js$SITE/standard.jjs"/>"></script>
-    <script type="text/javascript" src="<aksess:geturl url="/js/common/ba-debug.min.js"/>"></script>
     <kantega:hassection id="head">
         <kantega:getsection id="head"/>
     </kantega:hassection>

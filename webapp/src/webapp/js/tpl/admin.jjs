@@ -19,7 +19,7 @@ var tpl = {
         }
 
         this.init = function(){
-            debug.debug("tpl.Admin.init.function");
+            console.info("tpl.Admin.init.function");
             applyAdminOpenListeners();
 
             $(".addMatch").fancybox({
@@ -50,7 +50,7 @@ var tpl = {
         };
 
         var applyAdminOpenListeners = function() {
-            debug.debug("tpl.Admin.applyReportOpenListeners");
+            console.info("tpl.Admin.applyReportOpenListeners");
 
             $(".sidemenu a").click(function(event){
                 event.preventDefault();
@@ -222,7 +222,7 @@ var tpl = {
 
             $("#SeasonFilter").live("change", function(){
                 var seasonId = $("select option:selected").val();
-                debug.debug(seasonId);
+                console.info(seasonId);
                 $("#SeasonAdminView").removeClass("hidden");
                 $("#SeasonAdminView a").each(function(){
                     var $href = $(this).attr("href");
@@ -432,6 +432,6 @@ var tpl = {
 var admin = new tpl.Admin();
 
 $(document).ready(function(){
-    debug.debug("tpl.Admin.init");
+    console.info("tpl.Admin.init");
     admin.init();
 });
