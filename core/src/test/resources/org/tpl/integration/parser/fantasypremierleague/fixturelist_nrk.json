@@ -1,0 +1,233 @@
+{
+    "self": {
+        "href": "\/kasparov.api\/idretter\/501\/turneringer\/1503\/sesonger\/60625\/terminliste"
+    },
+    "parent": {
+        "href": "\/kasparov.api\/idretter\/501\/turneringer\/1503\/sesonger\/60625"
+    },
+    "konkurranse": [
+        {
+            "href": "\/kasparov.api\/idretter\/501\/turneringer\/1503\/sesonger\/60625\/konkurranser\/86202",
+            "title": "Premier League"
+        }
+    ],
+    "kanaler": [],
+    "serienummer": 0,
+    "tittel": "Terminliste Engelsk Premier League 2016\/2017",
+    "oppdatert": 1467891355150,
+    "grupperingsindeks": [2],
+    "radoverskriftindeks": 0,
+    "sorteringsindeks": [2, 3, 0],
+    "lag": {
+        "7051": {
+            "navn": "Bournemouth",
+            "mellomkortnavn": "Bournemouth",
+            "kortnavn": "BOUR",
+            "landslag": false,
+            "hashtag": "#bournemouth",
+            "bildereferanse": {
+                "kode": "1blSXKpnQsbeZGIEWvJo1Q",
+                "crops": [{
+                    "80": "A3fH9OQq7GLw2iXKLkGl8Q"
+                }, {
+                    "160": "MQLx6TMdq5Pw2iXKLkGl8Q"
+                }]
+            },
+            "_links": [{
+                "href": "\/kasparov.api\/lag\/7051",
+                "title": "Lagside"
+            }]
+        },
+        "1578": {
+            "navn": "Manchester United",
+            "mellomkortnavn": "Man. United",
+            "kortnavn": "MUFC",
+            "landslag": false,
+            "hashtag": "#man. united",
+            "bildereferanse": {
+                "kode": "oAa4y4AQei34ncHBhSBU_A",
+                "crops": [{
+                    "80": "XkZgzL9RxpTSy38EXHfFMA"
+                }, {
+                    "160": "mB2BVYvqfgDSy38EXHfFMA"
+                }]
+            },
+            "_links": [{
+                "href": "\/kasparov.api\/lag\/1578",
+                "title": "Lagside"
+            }]
+        },
+        "7017": {
+            "navn": "Burnley",
+            "mellomkortnavn": "Burnley",
+            "kortnavn": "BURN",
+            "landslag": false,
+            "hashtag": "#burnley",
+            "bildereferanse": {
+                "kode": "cWXL7nkhYlePYWaMvVWdvQ",
+                "crops": [{
+                    "80": "N-rTwpJEFS_BpxKXNnpSCA"
+                }, {
+                    "160": "p2Vp_kObSzvBpxKXNnpSCA"
+                }]
+            },
+            "_links": [{
+                "href": "\/kasparov.api\/lag\/7017",
+                "title": "Lagside"
+            }]
+        },
+        "6525": {
+            "navn": "Swansea City",
+            "mellomkortnavn": "Swansea",
+            "kortnavn": "SWAN",
+            "landslag": false,
+            "hashtag": "#swansea",
+            "bildereferanse": {
+                "kode": "b-7pfzqKxq-wxEGxOGoEPQ",
+                "crops": [{
+                    "80": "uElFvHd4bky7L6Uso-rRtg"
+                }, {
+                    "160": "hPos3Y8p2j67L6Uso-rRtg"
+                }]
+            },
+            "_links": [{
+                "href": "\/kasparov.api\/lag\/6525",
+                "title": "Lagside"
+            }]
+        }
+    },
+    "meta": {
+        "idrett": {
+            "id": 501,
+            "navn": "Fotball",
+            "regler": "fotball"
+        },
+        "basehref": "http:\/\/resultater.nrk.no\/idretter\/501\/turneringer\/1503\/sesonger\/60625",
+        "navn": "Engelsk Premier League",
+        "sesong": "2016\/2017",
+        "kortnavn": "PL",
+        "lenker": [],
+        "bildereferanse": {
+            "kode": "CeUPjV1oXAk3FrMvdZrEJQ",
+            "crops": [
+                {
+                    "80": "x04xo1H-Wg9Old9IVy1LGg"
+                },
+                {
+                    "160": "7UmhrI_ERLZOld9IVy1LGg"
+                }
+            ]
+        }
+    },
+    "overskrift": {
+        "kolonner": [
+            {
+                "tekst": "Hjemmelag",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Bortelag",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "StartDato",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "StartTidspunkt",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Status",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Resultat",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Niv\u00e5",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Runde",
+                "kortnavn": null,
+                "prio": null
+            },
+            {
+                "tekst": "Kanal",
+                "kortnavn": null,
+                "prio": null
+            }
+        ]
+    },
+    "terminliste": [{
+        "live": false,
+        "kampside": "\/kasparov.api\/gui\/widgets\/minuttforminutt\/idretter\/501\/turneringer\/1503\/sesonger\/60625\/konkurranser\/86202\/kamper\/748744",
+        "harklipp": false,
+        "celler": [{
+            "type": "lookup",
+            "datasett": "lag",
+            "id": 7051
+        }, {
+            "type": "lookup",
+            "datasett": "lag",
+            "id": 1578
+        }, {
+            "type": "dato",
+            "tekst": "13. august 2016",
+            "href": null,
+            "indeks": "1471046400000"
+        }, "15.00", "IkkeStartet", {
+            "_links": [],
+            "type": "resultat",
+            "tekst": "0\u20130",
+            "hjemme": 0,
+            "borte": 0,
+            "vinner": null,
+            "sluttekst": ""
+        }, "Premier League", {
+            "type": "runde",
+            "tekst": "1. runde",
+            "indeks": 1
+        }, null]
+    }, {
+        "live": false,
+        "kampside": "\/kasparov.api\/gui\/widgets\/minuttforminutt\/idretter\/501\/turneringer\/1503\/sesonger\/60625\/konkurranser\/86202\/kamper\/748757",
+        "harklipp": false,
+        "celler": [{
+            "type": "lookup",
+            "datasett": "lag",
+            "id": 7017
+        }, {
+            "type": "lookup",
+            "datasett": "lag",
+            "id": 6525
+        }, {
+            "type": "dato",
+            "tekst": "13. august 2016",
+            "href": null,
+            "indeks": "1471046400000"
+        }, "15.00", "IkkeStartet", {
+            "_links": [],
+            "type": "resultat",
+            "tekst": "0\u20130",
+            "hjemme": 0,
+            "borte": 0,
+            "vinner": null,
+            "sluttekst": ""
+        }, "Premier League", {
+            "type": "runde",
+            "tekst": "1. runde",
+            "indeks": 1
+        }, null]
+    }
+    ]
+}

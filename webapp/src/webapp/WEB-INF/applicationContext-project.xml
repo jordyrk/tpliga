@@ -227,7 +227,7 @@
     <bean id="playerStatsConstructor" class="org.tpl.integration.parser.FantasyPremierLeaguePlayerStatsConstructor"/>
 
 
-    <bean id="matchParserHtml" class="org.tpl.integration.parser.MatchParserHtmlImpl">
+    <bean id="matchParserHtml" class="org.tpl.integration.parser.MatchParserNRKJsonImpl">
         <property name="leagueService" ref="leagueService"/>
     </bean>
 
