@@ -46,38 +46,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.1-beta-1</version>
+                <version>2.1.1</version>
                 <configuration>
                     <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.simplericity.jettyconsole</groupId>
-                <artifactId>jetty-console-maven-plugin</artifactId>
-                <version>1.37</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>createconsole</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <additionalDependencies>
-                        <additionalDependency>
-                            <artifactId>jetty-console-jsp-plugin</artifactId>
-                        </additionalDependency>
-                        <additionalDependency>
-                            <artifactId>jetty-console-startstop-plugin</artifactId>
-                        </additionalDependency>
-                        <additionalDependency>
-                            <groupId>org.kantega.openaksess</groupId>
-                            <artifactId>openaksess-jetty-console-plugin</artifactId>
-                            <version>1.1</version>
-                        </additionalDependency>
-                    </additionalDependencies>
-                </configuration>
-            </plugin>
+
 
         </plugins>
     </build>
