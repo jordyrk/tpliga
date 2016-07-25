@@ -95,17 +95,6 @@ public class OpenDataController {
 
     }
 
-
-    @RequestMapping("/antallblottalag")
-    public String getNumberOfOfficalTeams(ModelMap model){
-        FantasyRound fantasyRound = fantasyService.getCurrentFantasyRoundBySeasonId(fantasyService.getDefaultFantasySeason().getFantasySeasonId());
-        int numberOfOfficialWhenRoundIsClosed = fantasyService.getNumberOfOfficialWhenRoundIsClosedTeams(fantasyRound.getFantasyRoundId());
-        int numberOfOfficialTeams = fantasyService.getNumberOfOfficialTeams(fantasyRound.getFantasyRoundId());
-        model.put("numberOfOfficialWhenRoundIsClosed",numberOfOfficialWhenRoundIsClosed);
-        model.put("numberOfOfficialTeams",numberOfOfficialTeams);
-        return "json/viewnumberofofficialfantasyteams";
-    }
-
     @RequestMapping("/terminliste")
     public String getFixtures(ModelMap model){
         FantasySeason fantasySeason = fantasyService.getDefaultFantasySeason();

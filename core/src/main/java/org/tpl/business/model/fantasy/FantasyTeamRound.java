@@ -20,7 +20,7 @@ public class FantasyTeamRound {
     private FantasyRound fantasyRound;
     private List<Player> playerList;
     private boolean official;
-    private boolean officialWhenRoundIsClosed;
+    private boolean officialWhenRoundIsClosed = true;
     private int points = 0;
     private Formation formation = Formation.FOURFOURTWO;
     private Map <FormationPosition,Player> playerMap = new HashMap<FormationPosition, Player>();

@@ -796,33 +796,6 @@ table.defaultTable, table#StandardTable,table#FormTable{
 #ViewField{
     background: url('../../bitmaps/field-icon.png') no-repeat;
 }
-.blottchanger{
-    left: 576px;
-    position: absolute;
-    top: 228px;
-}
-.blottchanger #BlottTeam{
-    display: inline-block;
-    height: 32px;
-    width: 32px;
-    text-decoration: none;
-    background: url('../../bitmaps/blott.png') no-repeat;
-}
-.blottchanger #BlottTeam.blotta{
-    background: url('../../bitmaps/harblotta.png') no-repeat;
-}
-
-#BlottPopup{
-    background-color: #FFF;
-    border: 3px solid #000;
-    border-radius: 10px;
-    padding: 10px;
-    position: relative;
-    z-index: 2;
-    left: -50px;
-
-}
-
 
 .buyPlayer{
     background: url('../../bitmaps/plus.png') no-repeat;

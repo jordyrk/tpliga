@@ -191,36 +191,6 @@ public class FantasyTeamController {
         return "mypage/fantasyTeamRoundMessage";
     }
 
-    @RequestMapping("/fantasyteamround/changeofficial")
-    public String changeOfficial(@RequestParam Boolean checked,HttpServletRequest request, ModelMap model){
-        FantasyTeamRound fantasyTeamRound = fantasyUtil.getFantasyTeamRoundFromSession(request.getSession());
-        if(checked != null){
-            fantasyTeamRound.setOfficial(checked);
-            fantasyService.saveOrUpdateFantasyTeamRound(fantasyTeamRound);
-            if(checked){
-                model.put("message", "Laget er blottet");
-            }else{
-                model.put("message", "Laget er ikke blottet");
-            }
-        }
-        return "mypage/fantasyTeamRoundMessage";
-    }
-
-    @RequestMapping("/fantasyteamround/changeofficialwhenroundisclosed")
-    public String changeOfficialWhenRoundIsClosed(@RequestParam Boolean checked,HttpServletRequest request, ModelMap model){
-        FantasyTeamRound fantasyTeamRound = fantasyUtil.getFantasyTeamRoundFromSession(request.getSession());
-        if(checked != null){
-            fantasyTeamRound.setOfficialWhenRoundIsClosed(checked);
-            fantasyService.saveOrUpdateFantasyTeamRound(fantasyTeamRound);
-            if(checked){
-                model.put("message", "Laget blottes n&aring;r runden stenges.");
-            }else{
-                model.put("message", "Laget er ikke blottet");
-            }
-        }
-        return "mypage/fantasyTeamRoundMessage";
-    }
-
     private List<FantasyMatch> createAdjustedFantasyMatchList(int teamId, int fantasyLeagueId, List<FantasyRound> fantasyRounds) {
         List<FantasyMatch> fantasyMatches = getMatchesForFantasyLeague(false, teamId, fantasyLeagueId);
         List<FantasyMatch> fantasyMatchListAdjustedToRounds = new ArrayList<FantasyMatch>();

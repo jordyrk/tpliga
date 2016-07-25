@@ -102,30 +102,6 @@ var tpl = {
             return getJson(url);
         }
 
-        this.getNumberOfOfficalTeams = function(){
-            var url = "${pageContext.request.contextPath}/tpl/antallblottalag";
-            return getJson(url);
-        }
-
-        this.officialTeam = function(official){
-              var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/changeofficial?checked="
-                if(official){
-                    url +="true";
-                }else{
-                    url +="false";
-                }
-            return getJson(url);
-        }
-
-        this.officialTeamWhenRoundIsClosed = function(officialwhenroundisclosed){
-            var url = "${pageContext.request.contextPath}/tpl/fantasyteamround/changeofficialwhenroundisclosed?checked="
-            if(officialwhenroundisclosed){
-                url +="true";
-            }else{
-                url +="false";
-            }
-            return getJson(url);
-        }
 
         var getJson = function(url){
             var jsonData;

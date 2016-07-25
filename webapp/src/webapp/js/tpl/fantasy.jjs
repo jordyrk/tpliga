@@ -228,7 +228,7 @@ var tpl = {
             updateFormation(fantasyTeamRoundJson.formation);
 
             updateListView(fantasyTeamRoundJson.players);
-            updateOfficialTeam(fantasyTeamRoundJson.official, fantasyTeamRoundJson.officialwhenroundisclosed);
+
 
         }
 
@@ -459,26 +459,6 @@ var tpl = {
             return playerHtml;
         }
 
-        var updateNumberOfOfficialTeams = function(){
-            var messageRespons = jsonJS.getNumberOfOfficalTeams();
-            console.info(messageRespons);
-            $("#NumberOfOfficalTeams").html(messageRespons.ant_blotta_lag);
-            $("#NumberOfOfficalTeamsWhenTeamIsClosing").html(messageRespons.ant_som_e_blotta_naar_runden_stenge);
-        }
-
-        var updateOfficialTeam = function(official,officialwhenroundisclosed){
-            console.info("Offical team: " + official);
-            if(official){
-                console.info("Offical team: adding class");
-                $("#BlottTeam").addClass("blotta");
-                $("#BlottTvert").attr("checked","checked");
-            }
-
-            if(officialwhenroundisclosed){
-                $("#BlottNarRundenstenge").attr("checked","checked");
-            }
-        }
-
         var applyFantasyOpenListeners = function() {
             console.info("tpl.Fantasy.applyOpenListeners");
 
@@ -569,31 +549,7 @@ var tpl = {
                 }
             });
 
-            $("#BlottTeam").click(function(){
-                updateNumberOfOfficialTeams();
-                $("#BlottPopup").removeClass("hidden");
-            });
 
-            $("#BlottTvert").change(function(event){
-                var isChecked = $("#BlottTvert").attr("checked");
-                var messageRespons = jsonJS.officialTeam(isChecked);
-                if(! isChecked){
-                    $("#BlottTeam").removeClass("blotta")
-                }else{
-                    $("#BlottTeam").addClass("blotta")
-                }
-                showInfo(messageRespons.Message.text);
-                fantasy.updateOfficialTeams();
-                updateNumberOfOfficialTeams();
-            });
-
-            $("#BlottNarRundenstenge").change(function(event){
-                var isChecked = $("#BlottNarRundenstenge").attr("checked");
-                var messageRespons = jsonJS.officialTeamWhenRoundIsClosed(isChecked);
-                showInfo(messageRespons.Message.text);
-                updateNumberOfOfficialTeams();
-
-            });
 
             $(".player").live("click", function(event){
                 event.preventDefault();
