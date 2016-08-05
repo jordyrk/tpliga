@@ -7,7 +7,7 @@
 </div>
 
 <div class="bottom">
-    <span>2011/2012 Premier League</span>
+    <span>Premier League</span>
     <table>
         <tr>
             <td>Spilte kamper</td>
