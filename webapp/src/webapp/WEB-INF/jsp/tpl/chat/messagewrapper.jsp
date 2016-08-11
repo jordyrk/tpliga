@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
 <div id="Messages">
     <h1 title="Oppdateres hvert 15. sekund">Prat</h1>
     <span id="GetOlderMessages" class="minus" title="Hent gamlere beskjeder"></span>

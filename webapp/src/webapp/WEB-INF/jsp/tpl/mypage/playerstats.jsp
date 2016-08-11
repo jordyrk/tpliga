@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
 <div class="topp">
     <h1 id="PlayerName">&nbsp;</h1>
     <img src="../bitmaps/footballcard/playeroutline.png">
@@ -27,11 +27,11 @@
             <td id="PlayerGoals"></td>
         </tr>
         <tr>
-            <td>Antall målgivende</td>
+            <td>Antall mÃ¥lgivende</td>
             <td id="PlayerAssists"></td>
         </tr>
         <tr>
-            <td>Antall selvmål</td>
+            <td>Antall selvmÃ¥l</td>
             <td id="PlayerOwnGoals"></td>
         </tr>
 

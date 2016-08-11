@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.kantega.no/aksess/tags/aksess" prefix="aksess" %>
 <%@ taglib uri="http://www.kantega.no/aksess/tags/commons" prefix="kantega" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -42,11 +42,11 @@
     <div class="field">
          <form:radiobuttons path="fantasySeason" items="${fantasySeasonList}" itemLabel="name" itemValue="fantasySeasonId" delimiter="<br>"/>
     </div>
-    Inkluder lag som skal være med i cup og gruppespill
+    Inkluder lag som skal vÃ¦re med i cup og gruppespill
     <div class="field">
         <form:checkboxes path="fantasyTeamList" items="${availableFantasyTeamList}" itemLabel="name" itemValue="teamId" delimiter="<br>" />
     </div>
-    Inkluder runder som skal være med i cup og gruppespill
+    Inkluder runder som skal vÃ¦re med i cup og gruppespill
     <c:if test="${fantasycup.fantasySeason != null }">
     <div class="field">
         <form:checkboxes path="fantasyRoundList" items="${fantasyRoundList}" itemLabel="round" itemValue="fantasyRoundId" delimiter="<br>" />

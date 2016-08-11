@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="iso-8859-1" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib uri="http://www.kantega.no/aksess/tags/aksess" prefix="aksess" %>
 <%@ taglib uri="http://www.kantega.no/aksess/tags/commons" prefix="kantega" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,7 +21,7 @@
     <div class="field">
         <div class="input">
             <input id="PlayerQuery" name="playerQuery" placeholder="S&oslash;k etter spillere"/>
-            <input type="submit" value="Søk">
+            <input type="submit" value="SÃ¸k">
         </div>
     </div>
 
