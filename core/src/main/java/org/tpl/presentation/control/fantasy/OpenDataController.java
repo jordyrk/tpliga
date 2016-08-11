@@ -122,6 +122,16 @@ public class OpenDataController {
         return "json/viewfixtures";
     }
 
+    @RequestMapping("/antallblottalag")
+    public String getNumberOfOfficalTeams(ModelMap model){
+        FantasyRound fantasyRound = fantasyService.getCurrentFantasyRoundBySeasonId(fantasyService.getDefaultFantasySeason().getFantasySeasonId());
+        int numberOfOfficialWhenRoundIsClosed = fantasyService.getNumberOfOfficialWhenRoundIsClosedTeams(fantasyRound.getFantasyRoundId());
+        int numberOfOfficialTeams = fantasyService.getNumberOfOfficialTeams(fantasyRound.getFantasyRoundId());
+        model.put("numberOfOfficialWhenRoundIsClosed",numberOfOfficialWhenRoundIsClosed);
+        model.put("numberOfOfficialTeams",numberOfOfficialTeams);
+        return "json/viewnumberofofficialfantasyteams";
+    }
+
     @RequestMapping(value = "/open/viewallfantasyteams")
     public String viewAllTeams(ModelMap model, HttpServletRequest request){
         List<FantasyTeam> allFantasyTeams = fantasyService.getAllFantasyTeams();
