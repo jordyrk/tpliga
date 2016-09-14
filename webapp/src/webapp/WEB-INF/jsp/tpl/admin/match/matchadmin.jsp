@@ -17,8 +17,14 @@
 
     <div id="SeasonAdminView" class="hidden">
         <a class="matchAdmin button" href="${pageContext.request.contextPath}/tpl/admin/match/import">Oppdater kamper</a>
-        <input id="FPLRound" type="text" name="round" placeholder="number">
-        <a id="FPLUpdateId" class="button" href="${pageContext.request.contextPath}/tpl/admin/match/updatematchesfantasypremierleague">Oppdater FPL-ID</a>
+        <select id="MonthSelect" name="montSelect">
+            <option disabled="disabled" selected="selected">Velg måned</option>
+            <c:forEach var="month" items="${months}">
+
+                <option value="${month}">${month}</option>
+            </c:forEach>
+        </select>
+        <a id="MonthUpdateId" class="button" href="${pageContext.request.contextPath}/tpl/admin/match/updatematchesfantasypremierleague" title="Henter data for en måned fra STATSFC. ">Hent data</a>
         <a class="matchAdmin button" href="${pageContext.request.contextPath}/tpl/admin/match/matchoverview">Terminliste</a>
     </div>
 

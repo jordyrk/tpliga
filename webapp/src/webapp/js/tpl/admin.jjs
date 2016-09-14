@@ -97,10 +97,10 @@ var tpl = {
                 });
             });
 
-            $("#FPLUpdateId").live("click", function(event){
+            $("#MonthUpdateId").live("click", function(event){
                 event.preventDefault();
                 var url = $(this).attr("href");
-                url += "&round="+ $("#FPLRound").val();
+                url += "&month="+ $("#MonthSelect").val();
                 standard.setWait("#MatchContent", "wait");
                 $.get(url, function(data) {
                     $('#MatchContent').html(data);

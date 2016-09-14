@@ -1,13 +1,11 @@
 package org.tpl.business.service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.tpl.business.model.Player;
 import org.tpl.business.model.fantasy.PlayerUsage;
 import org.tpl.business.model.search.PlayerSearchResult;
 import org.tpl.business.model.search.SearchTerm;
 import org.tpl.business.service.fantasy.exception.PlayerDeleteException;
-import org.tpl.integration.dao.PlayerDao;
 
 import java.util.List;
 
@@ -42,5 +40,5 @@ void saveOrUpdatePlayer(Player player);
     List<PlayerUsage> getMostUsedPlayersAsTeamForTeam(int fantasyTeamId, int fantasySeasonId);
 
 
-    List<Player> getPlayerByLastName(String lastName, int teamId);
+    List<Player> getPlayerByName(String firstName,String lastName, int teamId);
 }

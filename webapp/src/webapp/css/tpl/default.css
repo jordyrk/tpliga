@@ -750,14 +750,6 @@ table.defaultTable, table#StandardTable,table#FormTable{
     display:inline-block;
 }
 
-#PlayerList{
-    height: 410px;
-    width: 600px;
-    font-size: 0.9em;
-    background:url("../../bitmaps/footballcard/blackbackground.png") repeat scroll 0 0 transparent;
-    color: white;
-}
-
 
 
 #PlayerList .playerTableList{

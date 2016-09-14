@@ -66,10 +66,17 @@ public class DefaultPlayerService extends AbstractService implements PlayerServi
         return players;
     }
 
-    public List<Player> getPlayerByLastName(String lastName, int teamId) {
+    public List<Player> getPlayerByName(String firstName, String lastName, int teamId) {
         ComparisonTerm term1 = new ComparisonTerm("team_id", Operator.LIKE, teamId);
         ComparisonTerm term2 = new ComparisonTerm("lastname", Operator.LIKE, lastName);
-        AndTerm andTerm = new AndTerm(term1,term2);
+        AndTerm andTerm;
+        if(firstName != null){
+            ComparisonTerm term3 = new ComparisonTerm("firstname", Operator.LIKE, firstName);
+            AndTerm secondAndTerm = new AndTerm(term1,term2);
+            andTerm = new AndTerm(term3,secondAndTerm);
+        }else{
+            andTerm = new AndTerm(term1,term2);
+        }
         List<Player> players = playerDao.getPlayerBySearchTerm(andTerm).getResults();
         updateDependenciesForPlayers(players);
         return players;

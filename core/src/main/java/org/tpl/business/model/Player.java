@@ -62,7 +62,7 @@ public class Player {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = washName(firstName);
     }
 
     public String getLastName() {
@@ -70,7 +70,7 @@ public class Player {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = washName(lastName);
     }
 
     public PlayerPosition getPlayerPosition() {
@@ -147,5 +147,51 @@ public class Player {
 
     public void setSoccerNetId(int soccerNetId) {
         this.soccerNetId = soccerNetId;
+    }
+
+    public void setFullName(String fullName){
+        if(fullName!= null && fullName.length() > 0){
+            if(fullName.contains(" ")){
+                int lastSpaceIndex = fullName.lastIndexOf(" ");
+                setFirstName(fullName.substring(0, lastSpaceIndex));
+                setLastName( fullName.substring(lastSpaceIndex+1));
+
+
+            }else{
+                setLastName(fullName);
+            }
+        }
+
+    }
+
+    private String washName(String input){
+        if(input != null){
+            //input = input.replaceAll("'","");
+            input = input.replaceAll("\\u00e0","a");
+            input = input.replaceAll("\\u0107","c");
+            input = input.replaceAll("\\u0141","L");
+            input = input.replaceAll("\\u0144","n");
+            input = input.replaceAll("\\u0161","s");
+            input = input.replaceAll("\\u011b","e");
+            input = input.replaceAll("\\u010c","C");
+            input = input.replaceAll("\\u00c9","E");
+            input = input.replaceAll("\\u00d6","O");
+            input = input.replaceAll("\\u00e1","a");
+            input = input.replaceAll("\\u00e8","e");
+            input = input.replaceAll("\\u00e9","e");
+            input = input.replaceAll("\\u00ed","i");
+            input = input.replaceAll("\\u00f0","d");
+            input = input.replaceAll("\\u00f3","o");
+            input = input.replaceAll("\\u00f6","o");
+            input = input.replaceAll("\\u00f8","o");
+            input = input.replaceAll("\\u00fa","u");
+            input = input.replaceAll("\\u00f1","n");
+
+        }
+        return input;
+
+
+
+
     }
 }

@@ -32,12 +32,12 @@
                 </c:if>
             </td>
             <td>
-                <c:if test="${match.fantasyPremierLeagueId>0 && ! match.playerStatsUpdated}">
+                <c:if test="${! match.playerStatsUpdated}">
                     <a class="matchstats editMatch" href="${pageContext.request.contextPath}/tpl/admin/match/matchstats?matchId=${match.matchId}" title="<spring:message code='match.admin'/>">&nbsp;</a>
                 </c:if>
             </td>
             <td>
-                <c:if test="${match.fantasyPremierLeagueId>0 && match.playerStatsUpdated}">
+                <c:if test="${match.playerStatsUpdated}">
                     <a class="editMatch" href="${pageContext.request.contextPath}/tpl/admin/match/updatepoints?matchId=${match.matchId}" title="Oppdater poeng for spillere">Oppdater poeng</a>
                 </c:if>
             </td>

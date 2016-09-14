@@ -1,11 +1,10 @@
 package org.tpl.business.service;
 
 import org.tpl.business.model.*;
-import org.tpl.business.service.fantasy.exception.PlayerStatsCreationException;
+import org.tpl.business.model.statsfc.MonthEnum;
 import org.tpl.integration.parser.MatchImportException;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * User: Koren
@@ -17,5 +16,5 @@ public interface ImportService {
 
     List<PlayerStats> importPlayerStats(Match match);
 
-    void updateMatchesWithFantastyPremierLeagueId(Integer seasonId, int round) throws MatchImportException;
+    void readDataForMonth(Season season, MonthEnum monthEnum) throws MatchImportException;
 }

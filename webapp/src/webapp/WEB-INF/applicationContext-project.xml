@@ -224,22 +224,16 @@
 
     <!-- Parsers-->
 
-    <bean id="playerStatsConstructor" class="org.tpl.integration.parser.FantasyPremierLeaguePlayerStatsConstructor"/>
+    <bean id="playerStatsConstructor" class="org.tpl.integration.parser.StatsFcPlayerStatsConstructor"/>
 
+    <bean id="statsFcPlayerStatsParser" class="org.tpl.integration.parser.StatsFcPlayerStatsParser"/>
 
     <bean id="matchParserHtml" class="org.tpl.integration.parser.MatchParserNRKJsonImpl">
         <property name="leagueService" ref="leagueService"/>
     </bean>
 
-
-    <bean id="fantasyPremierLeagueMatchHtmlParser" class="org.tpl.integration.parser.FantasyPremierLeagueMatchHtmlParser">
-        <property name="baseUrl">
-            <value>http://fantasy.premierleague.com/fixtures/%s/</value>
-        </property>
-    </bean>
-
-    <bean id="playerStatsParser" class="org.tpl.integration.parser.FantasyPremierLeaguePlayerStatsParser">
-        <property name="baseUrl" value="http://fantasy.premierleague.com/fixture/%s/"/>
+    <bean id="statsFcPlayerStatsJson" class="org.tpl.integration.parser.StatsFcPlayerStatsJsonImpl">
+        <constructor-arg value="${api-key}"/>
     </bean>
 
     <!-- Parsers-->

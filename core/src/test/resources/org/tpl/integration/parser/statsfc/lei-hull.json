@@ -1,0 +1,541 @@
+{
+    "id": 69532,
+    "timestamp": "2016-08-13T11:30:00+0000",
+    "competition": {
+        "id": 2,
+        "name": "Premier League",
+        "key": "EPL",
+        "region": "England"
+    },
+    "round": {
+        "id": 1044,
+        "name": "Premier League",
+        "start": null,
+        "end": null
+    },
+    "teams": {
+        "home": {
+            "id": 366,
+            "name": "Hull City",
+            "shortName": "Hull"
+        },
+        "away": {
+            "id": 481,
+            "name": "Leicester City",
+            "shortName": "Leicester"
+        }
+    },
+    "players": {
+        "home": [{
+            "id": 18709,
+            "number": 12,
+            "position": "GK",
+            "role": "sub",
+            "name": "Du\u0161an Kuciak",
+            "shortName": "Kuciak"
+        }, {
+            "id": 17664,
+            "number": 16,
+            "position": "GK",
+            "role": "starting",
+            "name": "Eldin Jakupovi\u0107",
+            "shortName": "Jakupovi\u0107"
+        }, {
+            "id": 16774,
+            "number": 3,
+            "position": "DF",
+            "role": "starting",
+            "name": "Andrew Robertson",
+            "shortName": "Robertson"
+        }, {
+            "id": 17687,
+            "number": 6,
+            "position": "DF",
+            "role": "starting",
+            "name": "Curtis Davies",
+            "shortName": "Davies"
+        }, {
+            "id": 63125,
+            "number": 28,
+            "position": "DF",
+            "role": "sub",
+            "name": "Josh Tymon",
+            "shortName": "Tymon"
+        }, {
+            "id": 70946,
+            "number": 37,
+            "position": "DF",
+            "role": "sub",
+            "name": "Josh Clackstone",
+            "shortName": "Clackstone"
+        }, {
+            "id": 17681,
+            "number": 7,
+            "position": "MF",
+            "role": "starting",
+            "name": "David Meyler",
+            "shortName": "Meyler"
+        }, {
+            "id": 17390,
+            "number": 8,
+            "position": "MF",
+            "role": "starting",
+            "name": "Tom Huddlestone",
+            "shortName": "Huddlestone"
+        }, {
+            "id": 17640,
+            "number": 10,
+            "position": "MF",
+            "role": "starting",
+            "name": "Robert Snodgrass",
+            "shortName": "Snodgrass"
+        }, {
+            "id": 22627,
+            "number": 11,
+            "position": "MF",
+            "role": "starting",
+            "name": "Sam Clucas",
+            "shortName": "Clucas"
+        }, {
+            "id": 17404,
+            "number": 14,
+            "position": "MF",
+            "role": "starting",
+            "name": "Jake Livermore",
+            "shortName": "Livermore"
+        }, {
+            "id": 17366,
+            "number": 15,
+            "position": "MF",
+            "role": "sub",
+            "name": "Shaun Maloney",
+            "shortName": "Maloney"
+        }, {
+            "id": 17677,
+            "number": 27,
+            "position": "MF",
+            "role": "starting",
+            "name": "Ahmed Elmohamady",
+            "shortName": "Elmohamady"
+        }, {
+            "id": 70947,
+            "number": 36,
+            "position": "MF",
+            "role": "sub",
+            "name": "Greg Olley",
+            "shortName": "Olley"
+        }, {
+            "id": 25369,
+            "number": 9,
+            "position": "FW",
+            "role": "starting",
+            "name": "Abel Hern\u00e1ndez",
+            "shortName": "Hern\u00e1ndez"
+        }, {
+            "id": 32029,
+            "number": 20,
+            "position": "FW",
+            "role": "starting",
+            "name": "Adama Diomand\u00e9",
+            "shortName": "Diomand\u00e9"
+        }, {
+            "id": 24303,
+            "number": 29,
+            "position": "FW",
+            "role": "sub",
+            "name": "Jarrod Bowen",
+            "shortName": "Bowen"
+        }, {
+            "id": 37464,
+            "number": 32,
+            "position": "FW",
+            "role": "sub",
+            "name": "Greg Luer",
+            "shortName": "Luer"
+        }],
+        "away": [{
+            "id": 19579,
+            "number": 1,
+            "position": "GK",
+            "role": "starting",
+            "name": "Kasper Schmeichel",
+            "shortName": "Schmeichel"
+        }, {
+            "id": 19254,
+            "number": 21,
+            "position": "GK",
+            "role": "sub",
+            "name": "Ron-Robert Zieler",
+            "shortName": "Zieler"
+        }, {
+            "id": 35688,
+            "number": 2,
+            "position": "DF",
+            "role": "starting",
+            "name": "Luis Hern\u00e1ndez",
+            "shortName": "Hern\u00e1ndez"
+        }, {
+            "id": 55255,
+            "number": 3,
+            "position": "DF",
+            "role": "sub",
+            "name": "Ben Chilwell",
+            "shortName": "Chilwell"
+        }, {
+            "id": 19795,
+            "number": 5,
+            "position": "DF",
+            "role": "starting",
+            "name": "Wes Morgan",
+            "shortName": "Morgan"
+        }, {
+            "id": 21371,
+            "number": 17,
+            "position": "DF",
+            "role": "starting",
+            "name": "Danny Simpson",
+            "shortName": "Simpson"
+        }, {
+            "id": 18475,
+            "number": 28,
+            "position": "DF",
+            "role": "starting",
+            "name": "Christian Fuchs",
+            "shortName": "Fuchs"
+        }, {
+            "id": 19794,
+            "number": 4,
+            "position": "MF",
+            "role": "starting",
+            "name": "Danny Drinkwater",
+            "shortName": "Drinkwater"
+        }, {
+            "id": 17789,
+            "number": 10,
+            "position": "MF",
+            "role": "starting",
+            "name": "Andy King",
+            "shortName": "King"
+        }, {
+            "id": 17147,
+            "number": 11,
+            "position": "MF",
+            "role": "sub",
+            "name": "Marc Albrighton",
+            "shortName": "Albrighton"
+        }, {
+            "id": 27332,
+            "number": 13,
+            "position": "MF",
+            "role": "sub",
+            "name": "Daniel Amartey",
+            "shortName": "Amartey"
+        }, {
+            "id": 56705,
+            "number": 14,
+            "position": "MF",
+            "role": "sub",
+            "name": "Bartosz Kapustka",
+            "shortName": "Kapustka"
+        }, {
+            "id": 21023,
+            "number": 22,
+            "position": "MF",
+            "role": "starting",
+            "name": "Demarai Gray",
+            "shortName": "Gray"
+        }, {
+            "id": 22236,
+            "number": 26,
+            "position": "MF",
+            "role": "starting",
+            "name": "Riyad Mahrez",
+            "shortName": "Mahrez"
+        }, {
+            "id": 18594,
+            "number": 7,
+            "position": "FW",
+            "role": "starting",
+            "name": "Ahmed Musa",
+            "shortName": "Musa"
+        }, {
+            "id": 19798,
+            "number": 9,
+            "position": "FW",
+            "role": "starting",
+            "name": "Jamie Vardy",
+            "shortName": "Vardy"
+        }, {
+            "id": 17781,
+            "number": 20,
+            "position": "FW",
+            "role": "sub",
+            "name": "Shinji Okazaki",
+            "shortName": "Okazaki"
+        }, {
+            "id": 21636,
+            "number": 23,
+            "position": "FW",
+            "role": "sub",
+            "name": "Leonardo Ulloa",
+            "shortName": "Ulloa"
+        }]
+    },
+    "score": [2, 1],
+    "currentState": {
+        "id": 9,
+        "key": "FT",
+        "name": "Full-Time"
+    },
+    "venue": {
+        "id": 377,
+        "name": "KC Stadium",
+        "capacity": 25400
+    },
+    "events": {
+        "cards": [{
+            "id": 40680,
+            "timestamp": "2016-08-13T11:58:29+0000",
+            "matchTime": "28'",
+            "type": "card",
+            "subType": "first-yellow",
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "player": {
+                "id": "18475",
+                "name": "Christian Fuchs",
+                "shortName": "Fuchs",
+                "position": "DF"
+            }
+        }, {
+            "id": 40681,
+            "timestamp": "2016-08-13T12:02:29+0000",
+            "matchTime": "32'",
+            "type": "card",
+            "subType": "first-yellow",
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "player": {
+                "id": "21371",
+                "name": "Danny Simpson",
+                "shortName": "Simpson",
+                "position": "DF"
+            }
+        }, {
+            "id": 40684,
+            "timestamp": "2016-08-13T12:58:44+0000",
+            "matchTime": "71'",
+            "type": "card",
+            "subType": "first-yellow",
+            "team": {
+                "id": 366,
+                "name": "Hull City",
+                "shortName": "Hull"
+            },
+            "player": {
+                "id": "17687",
+                "name": "Curtis Davies",
+                "shortName": "Davies",
+                "position": "DF"
+            }
+        }, {
+            "id": 40685,
+            "timestamp": "2016-08-13T13:11:09+0000",
+            "matchTime": "83'",
+            "type": "card",
+            "subType": "first-yellow",
+            "team": {
+                "id": 366,
+                "name": "Hull City",
+                "shortName": "Hull"
+            },
+            "player": {
+                "id": "22627",
+                "name": "Sam Clucas",
+                "shortName": "Clucas",
+                "position": "MF"
+            }
+        }],
+        "goals": [{
+            "id": 159265,
+            "timestamp": "2016-08-13T12:16:07+0000",
+            "matchTime": "45+1'",
+            "type": "goal",
+            "subType": null,
+            "team": {
+                "id": 366,
+                "name": "Hull City",
+                "shortName": "Hull"
+            },
+            "player": {
+                "id": "32029",
+                "name": "Adama Diomand\u00e9",
+                "shortName": "Diomand\u00e9",
+                "position": "FW"
+            },
+            "assist": {
+                "id": "25369",
+                "name": "Abel Hern\u00e1ndez",
+                "shortName": "Hern\u00e1ndez",
+                "position": "FW"
+            }
+        }, {
+            "id": 159274,
+            "timestamp": "2016-08-13T12:34:45+0000",
+            "matchTime": "47'",
+            "type": "goal",
+            "subType": "penalty",
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "player": {
+                "id": "22236",
+                "name": "Riyad Mahrez",
+                "shortName": "Mahrez",
+                "position": "MF"
+            },
+            "assist": {
+                "id": "21023",
+                "name": "Demarai Gray",
+                "shortName": "Gray",
+                "position": "MF"
+            }
+        }, {
+            "id": 159279,
+            "timestamp": "2016-08-13T12:44:00+0000",
+            "matchTime": "56'",
+            "type": "goal",
+            "subType": null,
+            "team": {
+                "id": 366,
+                "name": "Hull City",
+                "shortName": "Hull"
+            },
+            "player": {
+                "id": "17640",
+                "name": "Robert Snodgrass",
+                "shortName": "Snodgrass",
+                "position": "MF"
+            }
+        }],
+        "states": [{
+            "id": 211605,
+            "timestamp": "2016-08-13T11:30:44+0000",
+            "matchTime": "1'",
+            "type": "state",
+            "state": {
+                "id": 1,
+                "key": "1H",
+                "name": "1st Half"
+            }
+        }, {
+            "id": 211656,
+            "timestamp": "2016-08-13T12:17:47+0000",
+            "matchTime": "45+3'",
+            "type": "state",
+            "state": {
+                "id": 4,
+                "key": "HT",
+                "name": "Half-Time"
+            }
+        }, {
+            "id": 211662,
+            "timestamp": "2016-08-13T12:33:40+0000",
+            "matchTime": "46'",
+            "type": "state",
+            "state": {
+                "id": 3,
+                "key": "2H",
+                "name": "2nd Half"
+            }
+        }, {
+            "id": 211722,
+            "timestamp": "2016-08-13T13:22:42+0000",
+            "matchTime": "90+5'",
+            "type": "state",
+            "state": {
+                "id": 9,
+                "key": "FT",
+                "name": "Full-Time"
+            }
+        }],
+        "substitutions": [{
+            "id": 56682,
+            "timestamp": "2016-08-13T12:55:44+0000",
+            "matchTime": "68'",
+            "type": "substitution",
+            "subType": null,
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "playerOff": {
+                "id": "17789",
+                "name": "Andy King",
+                "shortName": "King",
+                "position": "MF"
+            },
+            "playerOn": {
+                "id": "27332",
+                "name": "Daniel Amartey",
+                "shortName": "Amartey",
+                "position": "MF"
+            }
+        }, {
+            "id": 56681,
+            "timestamp": "2016-08-13T12:55:44+0000",
+            "matchTime": "68'",
+            "type": "substitution",
+            "subType": null,
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "playerOff": {
+                "id": "21023",
+                "name": "Demarai Gray",
+                "shortName": "Gray",
+                "position": "MF"
+            },
+            "playerOn": {
+                "id": "17781",
+                "name": "Shinji Okazaki",
+                "shortName": "Okazaki",
+                "position": "FW"
+            }
+        }, {
+            "id": 56683,
+            "timestamp": "2016-08-13T13:11:21+0000",
+            "matchTime": "83'",
+            "type": "substitution",
+            "subType": null,
+            "team": {
+                "id": 481,
+                "name": "Leicester City",
+                "shortName": "Leicester"
+            },
+            "playerOff": {
+                "id": "21371",
+                "name": "Danny Simpson",
+                "shortName": "Simpson",
+                "position": "DF"
+            },
+            "playerOn": {
+                "id": "21636",
+                "name": "Leonardo Ulloa",
+                "shortName": "Ulloa",
+                "position": "FW"
+            }
+        }]
+    }
+}

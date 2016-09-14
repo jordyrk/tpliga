@@ -3,15 +3,12 @@ package org.tpl.presentation.control.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tpl.business.model.*;
 import org.tpl.business.model.search.ComparisonTerm;
-import org.tpl.business.model.search.MatchSearchResult;
 import org.tpl.business.model.search.Operator;
-import org.tpl.business.model.validator.PlayerStatsValidator;
+import org.tpl.business.model.statsfc.MonthEnum;
 import org.tpl.business.service.ImportService;
 import org.tpl.business.service.LeagueService;
 import org.tpl.business.service.PlayerService;
@@ -21,7 +18,6 @@ import org.tpl.presentation.control.admin.util.MatchControllerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,6 +49,7 @@ public class MatchAdminController {
             session.setAttribute(SEASON, leagueService.getDefaultSeason());
         }
         List<Season> seasons = leagueService.getAllSeasons();
+        model.put("months", MonthEnum.values());
         model.put("seasons", seasons);
         return "admin/match/matchadmin";
     }
@@ -69,9 +66,10 @@ public class MatchAdminController {
     }
 
     @RequestMapping("/admin/match/updatematchesfantasypremierleague")
-    public String updateMatchesFromSoccernet(@RequestParam(required = true,value="seasonId")Integer seasonId, @RequestParam(required = true,value="round")Integer round, ModelMap model) {
+    public String updateMatchesFromSoccernet(@RequestParam(required = true,value="seasonId")Integer seasonId, @RequestParam(required = true,value="month")MonthEnum month, ModelMap model) {
+        Season season = leagueService.getSeasonById(seasonId);
         try {
-            importService.updateMatchesWithFantastyPremierLeagueId(seasonId, round);
+            importService.readDataForMonth(season,month);
         } catch (MatchImportException e) {
             model.put("errormessage", e.getMessage());
             return "admin/match/import";
@@ -137,7 +135,6 @@ public class MatchAdminController {
                 return "admin/match/message";
             }
         }
-        addManOfTheMatch(playerStatsList);
         for(PlayerStats playerStats: playerStatsList){
             leagueService.saveOrUpdatePlayerStats(playerStats);
         }
@@ -150,22 +147,6 @@ public class MatchAdminController {
         session.removeAttribute(PLAYERSTATS);
         return "admin/match/message";
 
-    }
-
-    private void addManOfTheMatch(List<PlayerStats> playerStatsList) {
-        //TODO:Finish
-        int highestPPI = 0;
-        for(PlayerStats playerStats : playerStatsList){
-            if(highestPPI < playerStats.getEaSportsPPI()){
-                highestPPI = playerStats.getEaSportsPPI();
-            }
-        }
-
-        for(PlayerStats playerStats : playerStatsList){
-            if(highestPPI == playerStats.getEaSportsPPI()){
-                playerStats.setManOfTheMatch(true);
-            }
-        }
     }
 
     @RequestMapping("/admin/match/deletePlayerStats")
