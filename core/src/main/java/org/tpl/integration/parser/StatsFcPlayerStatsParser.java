@@ -46,7 +46,7 @@ public class StatsFcPlayerStatsParser {
 
                 Player player = createPlayerFromFullName(name);
                 //All starting players are set at played 90 minutes. Substitutions will handle otherwise.
-                PlayerStats playerStats = createPlayerStats(team, 90, player);
+                PlayerStats playerStats = createPlayerStats(team, 90, player, true);
                 playerStatsList.add(playerStats);
             }
         }
@@ -64,12 +64,13 @@ public class StatsFcPlayerStatsParser {
                 String namePlayerOff = getString(playerOffMap, "name");
                 PlayerStats playerStatsPlayerOff = getPlayerStats(playerStatsList, namePlayerOff);
                 playerStatsPlayerOff.setPlayedMinutes(matchTime);
+                playerStatsPlayerOff.setWholeGame(false);
 
                 Map<String, Object> playerOnMap = getMap(substitutionsEvent, "playerOn");
                 String namePlayerOn = getString(playerOnMap, "name");
                 Player playerFromName = createPlayerFromFullName(namePlayerOn);
 
-                PlayerStats playerStats = createPlayerStats(team, 90 - matchTime, playerFromName);
+                PlayerStats playerStats = createPlayerStats(team, 90 - matchTime, playerFromName, false);
                 playerStatsList.add(playerStats);
             }
         }
@@ -140,11 +141,12 @@ public class StatsFcPlayerStatsParser {
     }
 
 
-    private PlayerStats createPlayerStats(Team team, int playedMinutes, Player player) {
+    private PlayerStats createPlayerStats(Team team, int playedMinutes, Player player, boolean wholeMatch) {
         PlayerStats playerStats = new PlayerStats();
         playerStats.setPlayer(player);
         playerStats.setTeam(team);
         playerStats.setPlayedMinutes(playedMinutes);
+        playerStats.setWholeGame(wholeMatch);
         return playerStats;
     }
 
