@@ -100,13 +100,13 @@
                         </div>
                         <div id="AttributeStatsSelector">
 
-                            <a id="MoveAttributesLeft"  href="#">�Forrige</a>
+                            <a id="MoveAttributesLeft"  href="#">Forrige</a>
                             <span>
                             <c:forEach items="${statsAttributes}" var="statsAttribute" varStatus="status">
                                 <a href="${statsAttribute}"  class="statsSelector<c:if test='${status.first}'> selected</c:if> <c:if test='${not status.first}'> hidden</c:if>" title="${statsAttribute}">${statsAttribute}</a>
                             </c:forEach>
                              </span>
-                            <a id="MoveAttributesRight" href="#">Neste�</a>
+                            <a id="MoveAttributesRight" href="#">Neste</a>
                         </div>
                             <%--
                             <div id="TeamStatsSelector">

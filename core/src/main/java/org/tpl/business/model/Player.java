@@ -169,10 +169,12 @@ public class Player {
             //input = input.replaceAll("'","");
             input = input.replaceAll("\\u00e0","a");
             input = input.replaceAll("\\u0107","c");
+            input = input.replaceAll("\\u0130","I");
             input = input.replaceAll("\\u0141","L");
             input = input.replaceAll("\\u0144","n");
             input = input.replaceAll("\\u0161","s");
             input = input.replaceAll("\\u011b","e");
+            input = input.replaceAll("\\u011f","g");
             input = input.replaceAll("\\u010c","C");
             input = input.replaceAll("\\u00c9","E");
             input = input.replaceAll("\\u00d6","O");
@@ -185,6 +187,7 @@ public class Player {
             input = input.replaceAll("\\u00f6","o");
             input = input.replaceAll("\\u00f8","o");
             input = input.replaceAll("\\u00fa","u");
+            input = input.replaceAll("\\u00fc","u");
             input = input.replaceAll("\\u00f1","n");
 
         }
