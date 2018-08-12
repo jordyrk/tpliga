@@ -172,6 +172,7 @@ public class Player {
             input = input.replaceAll("\\u0130","I");
             input = input.replaceAll("\\u0141","L");
             input = input.replaceAll("\\u0144","n");
+            input = input.replaceAll("\\u014d","o");
             input = input.replaceAll("\\u0161","s");
             input = input.replaceAll("\\u011b","e");
             input = input.replaceAll("\\u011f","g");
@@ -188,6 +189,7 @@ public class Player {
             input = input.replaceAll("\\u00f8","o");
             input = input.replaceAll("\\u00fa","u");
             input = input.replaceAll("\\u00fc","u");
+            input = input.replaceAll("\\u00fa","u");
             input = input.replaceAll("\\u00f1","n");
 
         }
