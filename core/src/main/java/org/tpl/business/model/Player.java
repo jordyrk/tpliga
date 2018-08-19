@@ -177,6 +177,8 @@ public class Player {
             input = input.replaceAll("\\u011b","e");
             input = input.replaceAll("\\u011f","g");
             input = input.replaceAll("\\u010c","C");
+            input = input.replaceAll("\\u010d","c");
+            input = input.replaceAll("\\u00c1","A");
             input = input.replaceAll("\\u00c9","E");
             input = input.replaceAll("\\u00d6","O");
             input = input.replaceAll("\\u00e1","a");
