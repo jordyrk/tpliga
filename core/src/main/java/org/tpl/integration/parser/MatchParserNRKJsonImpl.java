@@ -21,7 +21,7 @@ import java.util.*;
  * Created by jordyr on 7/21/16.
  */
 public class MatchParserNRKJsonImpl implements MatchConstructor {
-    private String baseUrl = "http://snutt.nrk.no/sport_apps/resultat/backend/data/kasparov.api/idretter/501/turneringer/1503/sesonger/165831/terminliste";
+    private String baseUrl = "http://snutt.nrk.no/sport_apps/resultat/backend/data/kasparov.api/idretter/501/turneringer/1503/sesonger/229458/terminliste";
     private SimpleDateFormat format = new SimpleDateFormat("HH.mm dd.MM.yy");
     protected LeagueService leagueService;
 
