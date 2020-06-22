@@ -21,7 +21,7 @@ public enum MonthEnum {
     JUNE("2020-06-01", "2020-06-31"),
     JULY("2020-07-01", "2020-07-31");
 
-    private static final String defaultQueryString = "?from=%s&to=%s";
+    private static final String defaultQueryString = "?from=%s&to=%s&season_id=3";
 
     private String queryString;
 

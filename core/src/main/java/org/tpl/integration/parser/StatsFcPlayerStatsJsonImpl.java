@@ -16,7 +16,7 @@ import java.util.*;
  * Created by jordyr on 7/21/16.
  */
 public class StatsFcPlayerStatsJsonImpl {
-    private String baseUrl = "https://dugout.statsfc.com/api/v1/results%s";
+    private String baseUrl = "https://dugout.statsfc.com/api/v2/results%s";
     private final String key;
 
     public StatsFcPlayerStatsJsonImpl(String key) {
