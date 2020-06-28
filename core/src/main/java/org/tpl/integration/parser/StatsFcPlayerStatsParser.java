@@ -96,8 +96,11 @@ public class StatsFcPlayerStatsParser {
                     Map<String, Object> assistPlayerMap = getMap(goalEvent, "assist");
                     if (assistPlayerMap != null) {
                         String assistName = getString(assistPlayerMap, "name");
-                        PlayerStats assistPlayerStats = getPlayerStats(playerStatsList, assistName);
-                        assistPlayerStats.setAssists(assistPlayerStats.getAssists() + 1);
+                        if(assistName != null && ! assistName.isEmpty()){
+                            PlayerStats assistPlayerStats = getPlayerStats(playerStatsList, assistName);
+                            assistPlayerStats.setAssists(assistPlayerStats.getAssists() + 1);
+                        }
+
                     }
                 }
 
@@ -163,7 +166,7 @@ public class StatsFcPlayerStatsParser {
         Player tempPlayer = new Player();
         tempPlayer.setFullName(fullName);
 
-        for (PlayerStats playerStats : playerStatsList) {
+            for (PlayerStats playerStats : playerStatsList) {
             if (tempPlayer.getLastName().equals(playerStats.getPlayer().getLastName()) && (tempPlayer.getFirstName() == null || (tempPlayer.getFirstName().equals(playerStats.getPlayer().getFirstName())))) {
                 return playerStats;
             }
